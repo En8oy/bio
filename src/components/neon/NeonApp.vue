@@ -67,13 +67,13 @@ const skillGroups = computed(() =>
       <h2 class="hl-section-title">{{ u("experience") }}</h2>
       <div class="hl-card-grid">
         <article
-          v-for="(exp, i) in resume.experience"
+          v-for="(exp, i) in resume.experience.slice(0, 2)"
           :key="exp.company"
           class="hl-card"
-          :class="{ 'hl-card--wide': i === 0 }"
+          :class="i === 0 ? 'hl-card--featured' : ''"
         >
           <div class="hl-card-head">
-            <h3>{{ exp.company }}</h3>
+            <h3><a v-if="exp.url" :href="exp.url" target="_blank" rel="noreferrer">{{ exp.company }}</a><template v-else>{{ exp.company }}</template></h3>
             <span class="hl-dates">{{ exp.startDate }} — {{ exp.endDate ?? u("present") }}</span>
           </div>
           <p class="hl-role">{{ t(exp.role, lang) }}</p>
@@ -82,6 +82,23 @@ const skillGroups = computed(() =>
           </ul>
           <div class="hl-tags">
             <span v-for="s in exp.stack" :key="s" class="hl-tag">{{ s }}</span>
+          </div>
+        </article>
+        <!-- Tangente México + UT Parras are both short — one combined card
+             instead of two mostly-empty ones. -->
+        <article class="hl-card hl-card--combo">
+          <div v-for="exp in resume.experience.slice(2)" :key="exp.company" class="hl-combo-item">
+            <div class="hl-card-head">
+              <h3><a v-if="exp.url" :href="exp.url" target="_blank" rel="noreferrer">{{ exp.company }}</a><template v-else>{{ exp.company }}</template></h3>
+              <span class="hl-dates">{{ exp.startDate }} — {{ exp.endDate ?? u("present") }}</span>
+            </div>
+            <p class="hl-role">{{ t(exp.role, lang) }}</p>
+            <ul>
+              <li v-for="(h, hi) in tList(exp.highlights, lang)" :key="hi">{{ h }}</li>
+            </ul>
+            <div class="hl-tags">
+              <span v-for="s in exp.stack" :key="s" class="hl-tag">{{ s }}</span>
+            </div>
           </div>
         </article>
       </div>

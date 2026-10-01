@@ -27,3 +27,5 @@ pnpm-debug.log*
 # not project source (18MB+ of binaries/reference docs, not useful to clone)
 .claude/skills/
 .opencode/
+# pure cache, regenerated on every edit — not meaningful state to version
+.impeccable/hook.cache.json

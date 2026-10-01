@@ -6,6 +6,11 @@ import profileSrc from "../assets/profile.jpg";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = await getImage({ src: profileSrc, width: 1200, height: 1200, format: "webp" });
 const ogImageURL = new URL(ogImage.src, Astro.site);
+const favicon32 = await getImage({ src: profileSrc, width: 32, height: 32, format: "png" });
+// webp instead of png here — the 180x180 PNG came out at 75kB (lossless on
+// a detailed photo compresses badly); webp at quality 80 is ~10x smaller
+// and every browser that honors apple-touch-icon also supports webp.
+const appleTouchIcon = await getImage({ src: profileSrc, width: 180, height: 180, format: "webp", quality: 80 });
 
 const title = "Irbing Moreno — Senior Full Stack Engineer";
 const description = resume.basics.summary.en;
@@ -21,12 +26,16 @@ const personJsonLd = {
   url: canonicalURL.toString(),
   sameAs: [resume.basics.github, resume.basics.linkedin],
 };
+
+const DEFAULT_DESIGN = "dotfiles";
+const VALID_DESIGNS = ["candy-brand", "terminal-dev", "neon", "dotfiles"];
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href={favicon32.src} />
+    <link rel="apple-touch-icon" href={appleTouchIcon.src} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -63,6 +72,25 @@ const personJsonLd = {
     </style>
   </head>
   <body>
-    <iframe id="design-frame" src="/designs/terminal-dev" title={title}></iframe>
+    <iframe id="design-frame" src={`/designs/${DEFAULT_DESIGN}`} title={title}></iframe>
+    <script define:vars={{ DEFAULT_DESIGN, VALID_DESIGNS }}>
+      // ?design=<slug>&lang=en|es&mode=light|dark on this page picks which
+      // design loads in the iframe and forwards lang/mode into its URL —
+      // the iframe has its own document/location, so query params on this
+      // page don't reach the embedded nav-switcher unless passed along.
+      const params = new URLSearchParams(window.location.search);
+      const design = params.get("design");
+      const slug = VALID_DESIGNS.includes(design) ? design : DEFAULT_DESIGN;
+
+      const forward = new URLSearchParams();
+      const lang = params.get("lang");
+      const mode = params.get("mode");
+      if (lang === "en" || lang === "es") forward.set("lang", lang);
+      if (mode === "light" || mode === "dark") forward.set("mode", mode);
+
+      const frame = document.getElementById("design-frame");
+      const query = forward.toString();
+      frame.src = `/designs/${slug}${query ? `?${query}` : ""}`;
+    </script>
   </body>
 </html>

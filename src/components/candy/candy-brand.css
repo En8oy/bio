@@ -150,15 +150,45 @@
 }
 
 .candy-card--featured {
+  /* THIIO: 7 highlights now — the biggest cell in the grid. */
   grid-column: span 2;
   grid-row: span 2;
 }
 
-.candy-card--wide {
-  /* UT Parras was landing alone in a narrow 1-col cell with both a
-     description and bullets — tall and cramped. Spanning 2 columns turns
-     it into a short, horizontal block instead. */
-  grid-column: span 2;
+.candy-card--tall {
+  /* WebforceHQ: also grew (4 detailed highlights + a long stack). Matches
+     the featured card's height in the one column dense-flow leaves free,
+     instead of competing with it for width. */
+  grid-row: span 2;
+}
+
+.candy-card--combo {
+  /* Tangente México + UT Parras are both short — one full-width card with
+     two compact sub-sections instead of two mostly-empty cells. */
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 760px) {
+  .candy-card--combo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.candy-combo-item + .candy-combo-item {
+  border-left: 1px solid color-mix(in srgb, var(--candy-outline) 25%, transparent);
+  padding-left: 20px;
+}
+
+@media (max-width: 760px) {
+  .candy-combo-item + .candy-combo-item {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid color-mix(in srgb, var(--candy-outline) 25%, transparent);
+    padding-top: 16px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -166,7 +196,7 @@
     grid-template-columns: 1fr;
   }
   .candy-card--featured,
-  .candy-card--wide {
+  .candy-card--tall {
     grid-column: span 1;
     grid-row: span 1;
   }
@@ -204,6 +234,16 @@
   font-family: "Baloo 2", var(--font-display);
   margin: 0;
   font-size: 1.3rem;
+}
+
+.candy-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.candy-card h3 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 .candy-dates,

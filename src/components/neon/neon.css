@@ -15,6 +15,10 @@
   --hl-border: color-mix(in srgb, white 12%, transparent);
   --hl-text: #e2e8f0;
   --hl-text-muted: #94a3b8;
+  /* Bright cyan text reads fine on the dark bg but has very low contrast
+     on the light one — a darker teal for chip text/backgrounds specifically
+     when the page is light. */
+  --hl-tag-text: var(--hl-cyan);
 
   position: relative;
   min-height: 100vh;
@@ -30,45 +34,46 @@
   --hl-border: color-mix(in srgb, black 10%, transparent);
   --hl-text: #0f172a;
   --hl-text-muted: #475569;
+  --hl-tag-text: #0e7490;
 }
 
 .hl-glow {
   position: absolute;
-  width: 560px;
-  height: 560px;
+  width: 680px;
+  height: 680px;
   border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.35;
+  filter: blur(100px);
+  opacity: 0.6;
   pointer-events: none;
   z-index: 0;
 }
 
 .hl-glow--1 {
-  top: -120px;
-  left: -120px;
+  top: -160px;
+  left: -160px;
   background: var(--hl-cyan);
 }
 
 .hl-glow--2 {
-  top: 280px;
-  right: -160px;
+  top: 240px;
+  right: -200px;
   background: var(--hl-purple);
 }
 
 .hl-hero {
   position: relative;
   z-index: 1;
-  /* Wider than before, but capped — the 300px + 1fr grid would leave a
-     huge dead gap between the photo and the text on very wide screens if
-     this went fully edge-to-edge like the card sections below. */
-  max-width: 1500px;
+  /* Matches .hl-section's max-width so the hero's left/right edges line up
+     with the cards below instead of the hero being wider and sticking out. */
+  max-width: 1400px;
+  min-height: 420px;
   margin: 0 auto;
-  /* top padding clears the shared fixed <nav-switcher> — this used to be a
-     second .hl-nav bar's job, removed so there's only one header. */
-  padding: 104px 24px 64px;
+  /* top padding clears the shared fixed <nav-switcher>; bottom padding
+     opened up a lot — it felt cramped/cut off against the section below. */
+  padding: 120px 24px 100px;
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 40px;
+  grid-template-columns: 340px 1fr;
+  gap: 48px;
   align-items: center;
   text-align: left;
 }
@@ -191,8 +196,9 @@
 .hl-section {
   position: relative;
   z-index: 1;
-  max-width: none;
-  width: 100%;
+  /* Full-bleed made each of the 2 card-grid columns absurdly wide on large
+     monitors — capped back to roughly the hero's width instead. */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 48px 24px;
   scroll-margin-top: 90px;
@@ -205,16 +211,27 @@
 }
 
 .hl-card-grid {
+  /* Fixed 2 columns, not auto-fit — auto-fit's column count depends on
+     viewport width, and WebforceHQ + the combo card (each span 2 of
+     however many columns that resolved to) only filled the row exactly
+     when the count happened to be a multiple of 2. A fixed 2-column grid
+     means two half-width cards always sum to a full row. */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 700px) {
+  .hl-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .hl-card {
   background: var(--hl-surface);
   border: 1px solid var(--hl-border);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 12px 14px;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: transform 0.25s ease, border-color 0.25s ease;
@@ -225,13 +242,35 @@
   border-color: color-mix(in srgb, var(--hl-cyan) 50%, var(--hl-border));
 }
 
-.hl-card--wide {
-  grid-column: span 2;
+.hl-card--featured {
+  /* THIIO: 7 highlights now — full width instead of fighting a narrow
+     column for space. */
+  grid-column: 1 / -1;
+}
+
+.hl-card--combo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.hl-combo-item + .hl-combo-item {
+  border-left: 1px solid var(--hl-border);
+  padding-left: 12px;
 }
 
 @media (max-width: 700px) {
-  .hl-card--wide {
+  .hl-card--featured {
     grid-column: span 1;
+  }
+  .hl-card--combo {
+    grid-template-columns: 1fr;
+  }
+  .hl-combo-item + .hl-combo-item {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--hl-border);
+    padding-top: 16px;
   }
 }
 
@@ -240,34 +279,50 @@
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 6px;
+  margin-bottom: 2px;
 }
 
 .hl-card h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 0.98rem;
+}
+
+.hl-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hl-card h3 a:hover {
+  color: var(--hl-tag-text);
+  text-decoration: underline;
 }
 
 .hl-dates {
-  font-size: 0.76rem;
-  color: var(--hl-cyan);
+  font-size: 0.72rem;
+  /* Was var(--hl-cyan) directly — same low-contrast-on-light-mode issue
+     the tags had; same fix. */
+  color: var(--hl-tag-text);
   font-weight: 600;
 }
 
 .hl-role {
   font-weight: 600;
   color: var(--hl-text-muted);
-  margin: 0 0 10px;
-  font-size: 0.9rem;
+  margin: 0 0 4px;
+  font-size: 0.82rem;
 }
 
 .hl-card ul {
-  margin: 0 0 12px;
-  padding-left: 18px;
+  margin: 0 0 6px;
+  padding-left: 16px;
   color: var(--hl-text-muted);
-  font-size: 0.88rem;
-  line-height: 1.6;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.hl-card li + li {
+  margin-top: 1px;
 }
 
 .hl-tags {
@@ -279,8 +334,8 @@
 .hl-tag {
   padding: 4px 10px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--hl-cyan) 14%, transparent);
-  color: var(--hl-cyan);
+  background: color-mix(in srgb, var(--hl-tag-text) 14%, transparent);
+  color: var(--hl-tag-text);
   font-size: 0.72rem;
   font-weight: 600;
 }

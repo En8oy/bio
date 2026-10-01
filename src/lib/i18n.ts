@@ -15,9 +15,24 @@ export function tList(value: LocalizedList | string[] | null | undefined, lang: 
   return value[lang] ?? value.en ?? [];
 }
 
+/**
+ * Resolution order: explicit ?lang= URL param (and persist it) > a
+ * previously stored choice > the browser's own language > "en".
+ */
 export function getStoredLang(): Lang {
   if (typeof window === "undefined") return "en";
-  return (localStorage.getItem("lang") as Lang) || "en";
+
+  const fromUrl = new URLSearchParams(window.location.search).get("lang");
+  if (fromUrl === "en" || fromUrl === "es") {
+    localStorage.setItem("lang", fromUrl);
+    return fromUrl;
+  }
+
+  const stored = localStorage.getItem("lang");
+  if (stored === "en" || stored === "es") return stored;
+
+  const browserLang = (navigator.languages?.[0] || navigator.language || "en").toLowerCase();
+  return browserLang.startsWith("es") ? "es" : "en";
 }
 
 export function onLangChange(callback: (lang: Lang) => void): () => void {

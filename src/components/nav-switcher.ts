@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit";
+import { getStoredLang } from "../lib/i18n";
 
 type Theme = "light" | "dark";
 type Lang = "en" | "es";
@@ -34,6 +35,7 @@ export class NavSwitcher extends LitElement {
     lang: { state: true },
     path: { state: true },
     menuOpen: { state: true },
+    loading: { state: true },
   };
 
   static styles = css`
@@ -151,12 +153,41 @@ export class NavSwitcher extends LitElement {
         align-items: stretch;
       }
     }
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: color-mix(in srgb, var(--color-bg, #fff) 85%, transparent);
+      backdrop-filter: blur(2px);
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid color-mix(in srgb, var(--color-accent, #6d5efc) 25%, transparent);
+      border-top-color: var(--color-accent, #6d5efc);
+      animation: spin 0.7s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .spinner {
+        animation-duration: 1.6s;
+      }
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
   `;
 
   declare theme: Theme;
   declare lang: Lang;
   declare path: string;
   declare menuOpen: boolean;
+  declare loading: boolean;
 
   constructor() {
     super();
@@ -164,15 +195,26 @@ export class NavSwitcher extends LitElement {
     this.lang = "en";
     this.path = "";
     this.menuOpen = false;
+    this.loading = false;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const storedTheme = localStorage.getItem("theme") as Theme | null;
-    this.theme = storedTheme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+    // ?mode= overrides and persists, same precedence as lang: URL param >
+    // stored choice > system preference.
+    const modeParam = new URLSearchParams(window.location.search).get("mode");
+    if (modeParam === "light" || modeParam === "dark") {
+      localStorage.setItem("theme", modeParam);
+      this.theme = modeParam;
+    } else {
+      const storedTheme = localStorage.getItem("theme") as Theme | null;
+      this.theme = storedTheme ?? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    }
     document.documentElement.setAttribute("data-theme", this.theme);
 
-    this.lang = (localStorage.getItem("lang") as Lang) || "en";
+    // getStoredLang() already resolves ?lang= > stored > navigator.language.
+    this.lang = getStoredLang();
     this.path = window.location.pathname;
   }
 
@@ -181,6 +223,11 @@ export class NavSwitcher extends LitElement {
   }
 
   private goTo(slug: string) {
+    if (this.path.includes(slug)) return;
+    // Full page navigation (new document, new framework island) can take a
+    // moment to show anything on a slow mobile connection — this overlay
+    // gives instant feedback instead of a frozen blank page in between.
+    this.loading = true;
     window.location.href = `/designs/${slug}`;
   }
 
@@ -238,6 +285,11 @@ export class NavSwitcher extends LitElement {
         ${this.menuOpen ? ICON_CLOSE : ICON_MENU}
       </button>
       <div class="mobile-panel">${this.renderDesigns()} ${this.renderControls()}</div>
+      ${this.loading
+        ? html`<div class="loading-overlay" role="status" aria-live="polite">
+            <span class="spinner"></span>
+          </div>`
+        : ""}
     `;
   }
 }

@@ -1,5 +1,5 @@
 /* Dotfiles world — a Linux-rice/terminal aesthetic (originally referenced
-   against omarchy.mx): monospace type throughout, warm-amber accent on
+   against omarchy.mx): monospace type throughout, a teal accent on
    near-black navy, a scattered dot/pixel background texture, square-
    cornered bordered cards (no gradients, no glass). The clickable
    theme-name cycler from the reference was dropped per request — this
@@ -9,7 +9,11 @@
    prop), not @import — see candy-brand.css for why. */
 
 .om-page {
-  --om-accent: #f5a97f;
+  --om-accent: #00aa8a;
+  /* Text color specifically — the raw accent reads fine on the dark bg
+     (~6.6:1) but fails AA on the light bg (~2.6:1), same issue Neon's tags
+     had. A darker teal keeps the same hue for light mode's text uses. */
+  --om-accent-text: var(--om-accent);
   --om-bg: #0a0e14;
   --om-text: #e8e3d3;
   --om-text-muted: #8a93a8;
@@ -24,10 +28,13 @@
 }
 
 :root:not([data-theme="dark"]) .om-page {
-  --om-bg: #f5f1e6;
-  --om-text: #1a1710;
-  --om-text-muted: #6b6354;
+  /* Cool neutral gray instead of the warm cream — pairs better with the
+     teal accent, which is a cool hue. */
+  --om-bg: #eef1f3;
+  --om-text: #1a1d1f;
+  --om-text-muted: #5c6368;
   --om-border: color-mix(in srgb, black 10%, transparent);
+  --om-accent-text: #00785f;
 }
 
 /* Scattered dot/pixel texture behind the hero, like the live site's
@@ -110,7 +117,7 @@
 }
 
 .om-cursor {
-  color: var(--om-accent);
+  color: var(--om-accent-text);
   animation: om-blink 1s steps(1) infinite;
 }
 
@@ -122,7 +129,7 @@
 
 .om-subtitle {
   font-size: 0.98rem;
-  color: var(--om-accent);
+  color: var(--om-accent-text);
   margin: 0 0 16px;
 }
 
@@ -185,7 +192,7 @@
 
 .om-btn--ghost:hover {
   border-color: var(--om-accent);
-  color: var(--om-accent);
+  color: var(--om-accent-text);
 }
 
 .om-section {
@@ -203,9 +210,18 @@
 }
 
 .om-card-grid {
+  /* Fixed 2 columns, not auto-fit — see neon.css for why: auto-fit's
+     column count depends on viewport width, so two span-2 half-width
+     cards only summed to a full row when that count was a multiple of 2. */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+}
+
+@media (max-width: 700px) {
+  .om-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .om-card {
@@ -213,6 +229,38 @@
   border-radius: 6px;
   background: color-mix(in srgb, white 3%, transparent);
   border: 1px solid var(--om-border);
+}
+
+.om-card--featured {
+  /* THIIO: 7 highlights now — full width instead of fighting a narrow
+     column for space. */
+  grid-column: 1 / -1;
+}
+
+.om-card--combo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.om-combo-item + .om-combo-item {
+  border-left: 1px solid var(--om-border);
+  padding-left: 18px;
+}
+
+@media (max-width: 700px) {
+  .om-card--featured {
+    grid-column: span 1;
+  }
+  .om-card--combo {
+    grid-template-columns: 1fr;
+  }
+  .om-combo-item + .om-combo-item {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--om-border);
+    padding-top: 14px;
+  }
 }
 
 .om-card-head {
@@ -229,9 +277,19 @@
   font-size: 1rem;
 }
 
+.om-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.om-card h3 a:hover {
+  color: var(--om-accent-text);
+  text-decoration: underline;
+}
+
 .om-dates {
   font-size: 0.72rem;
-  color: var(--om-accent);
+  color: var(--om-accent-text);
 }
 
 .om-role {
@@ -258,7 +316,7 @@
   padding: 3px 8px;
   border-radius: 4px;
   background: color-mix(in srgb, var(--om-accent) 16%, transparent);
-  color: var(--om-accent);
+  color: var(--om-accent-text);
   font-size: 0.68rem;
 }
 

@@ -16,56 +16,123 @@
   "experience": [
     {
       "company": "THIIO",
+      "url": "https://thiio.net/",
       "role": { "en": "Senior Full Stack Engineer", "es": "Programador Senior Full Stack" },
       "location": "Austin, Texas, USA",
       "remote": true,
       "startDate": "2023-02",
-      "endDate": null,
+      "endDate": "2026-09",
       "description": {
         "en": "AI-native marketing funnel platform (includes THIIO-MARTECH, the team focused on martech development services for external clients). Brands running their funnels on the platform include Yoli, Diabetes Freedom, and Barton Publishing.",
         "es": "Plataforma de embudos de marketing con IA (incluye THIIO-MARTECH, el equipo enfocado en servicios de desarrollo martech para clientes externos). Entre las marcas que operan sus funnels en la plataforma están Yoli, Diabetes Freedom y Barton Publishing."
       },
       "highlights": {
         "en": [
-          "Led a team of developers migrating the rendering architecture from a monolithic Vue runtime to Web Components (Lit) served per page via Cloudflare Workers, achieving PageSpeed scores of 95+ on mobile and 100 on desktop consistently across all published pages.",
-          "Redesigned the component editor to support AI-assisted customization, replacing rigid team-built themes with client-owned design — increasing client engagement with the platform and helping attract new clients through their own designs.",
-          "Implemented an edge manifest architecture (a JSON file served from Cloudflare) that eliminated redundant middleware on published pages, reducing unnecessary backend requests.",
+          "Led a team of developers in migrating the rendering from a monolithic Vue runtime to Web Components (Lit) served per page via Cloudflare Workers. Published pages consistently achieve PageSpeed scores of 95+ on mobile and 100 on desktop.",
+          "Redesigned the editor for AI-assisted customization, with an MCP server that lets funnels be built and published from Claude Code on top of the same services the web chat uses. Replaced rigid team-built themes with client-owned design, increasing client engagement with the platform and helping attract new clients.",
+          "Implemented an edge manifest architecture (JSON served from Cloudflare Workers and KV) that eliminated redundant middleware on published pages and reduced unnecessary backend requests.",
+          "Designed the multi-tenant platform (Laravel 12, PostgreSQL, React 19, Inertia), with a database per sub-account and a Platform / Agency / Sub-account hierarchy. Developed the shop module (variants, catalog, cart, checkout with Stripe) and the scheduling module (timezone-aware availability, double-booking protection).",
+          "Built and maintained the v2 visual editor (Vue 3, TypeScript, Pinia, pnpm/Turborepo monorepo) and its Astro SSG export. Implemented a real-time concurrent editing lock service (Socket.IO and Redis) that prevents two users from editing the same page at once.",
+          "Established quality assurance with around 1,200 tests (Pest/PHPUnit) and Playwright e2e specs, with spec-driven development.",
           "As part of THIIO-MARTECH, led teams on external client projects: for Gigz (a platform connecting brands, fans, and venue owners to organize concerts), migrated a Laravel 6 monolith to Laravel 12 with a decoupled Vue CLI frontend; for hbdr, resolved duplicate-data triangulation in referral campaigns imported from Google Analytics."
         ],
         "es": [
-          "Lideré a un equipo de desarrolladores en la migración de la arquitectura de renderizado de un runtime monolítico de Vue a Web Components (Lit) servidos por página vía Cloudflare Workers, logrando calificaciones de PageSpeed de 95+ en móvil y 100 en desktop de forma consistente en todas las páginas publicadas.",
-          "Rediseñé el editor de componentes para permitir personalización asistida por IA, reemplazando temas rígidos hechos por el equipo con diseño propio del cliente, lo que aumentó su compromiso con la plataforma y ayudó a atraer nuevos clientes a través de sus propios diseños.",
-          "Implementé una arquitectura de manifest en el edge (JSON servido desde Cloudflare) que eliminó middlewares redundantes en páginas publicadas, reduciendo peticiones innecesarias al backend.",
-          "Como parte de THIIO-MARTECH, lideré equipos en proyectos de clientes externos: para Gigz (plataforma que conecta marcas, fans y dueños de recintos para organizar conciertos), migré un monolito en Laravel 6 a Laravel 12 con frontend desacoplado en Vue CLI; para hbdr, resolví la triangulación de datos duplicados en campañas de referidos importados desde Google Analytics."
+          "Lideré a un equipo de desarrolladores en la migración del renderizado, de un runtime monolítico en Vue a Web Components (Lit) servidos por página vía Cloudflare Workers. Las páginas publicadas logran PageSpeed de 95+ en móvil y 100 en desktop de forma consistente.",
+          "Rediseñé el editor para personalización asistida por IA, con un servidor MCP que permite construir y publicar funnels desde Claude Code sobre los mismos servicios que usa el chat web. Reemplacé los temas rígidos hechos por el equipo con diseño propio del cliente, lo que aumentó su compromiso con la plataforma y ayudó a atraer nuevos clientes.",
+          "Implementé una arquitectura de manifest en el edge (JSON servido desde Cloudflare Workers y KV) que eliminó middlewares redundantes en las páginas publicadas y redujo las peticiones innecesarias al backend.",
+          "Diseñé la plataforma multi-tenant (Laravel 12, PostgreSQL, React 19, Inertia), con una base de datos por subcuenta y jerarquía Plataforma, Agencia y Subcuenta. Desarrollé los módulos de shop (variantes, catálogo, carrito, checkout con Stripe) y scheduling (disponibilidad por zona horaria, protección contra doble reserva).",
+          "Construí y mantuve el editor visual v2 (Vue 3, TypeScript, Pinia, monorepo pnpm/Turborepo) y el export a Astro SSG. Implementé un servicio de bloqueo de edición concurrente en tiempo real (Socket.IO y Redis) que impide que dos usuarios editen la misma página a la vez.",
+          "Establecí el aseguramiento de calidad con unos 1,200 tests (Pest/PHPUnit) y specs e2e con Playwright, y desarrollo guiado por specs.",
+          "Como parte de THIIO-MARTECH, lideré equipos en proyectos de clientes externos. Para Gigz (plataforma que conecta marcas, fans y dueños de recintos para organizar conciertos), migré un monolito en Laravel 6 a Laravel 12 con frontend desacoplado en Vue CLI. Para hbdr, resolví la triangulación de datos duplicados en campañas de referidos importados desde Google Analytics."
         ]
       },
-      "stack": ["Laravel", "Vue", "Astro", "Lit", "Node.js", "Python", "MySQL", "Cloudflare Workers", "MCP/Claude Code", "Shopify/GoHighLevel"]
+      "stack": [
+        "Laravel",
+        "PHP",
+        "Vue 3",
+        "React",
+        "TypeScript",
+        "Astro",
+        "Lit",
+        "Node.js",
+        "Python",
+        "PostgreSQL",
+        "MySQL",
+        "Redis",
+        "Cloudflare Workers",
+        "Cloudflare KV",
+        "Cloudflare R2",
+        "Stripe",
+        "Playwright",
+        "MCP/Claude Code",
+        "Shopify",
+        "GoHighLevel"
+      ]
     },
     {
       "company": "WebforceHQ",
+      "url": "https://webforcehq.com/hq",
       "role": { "en": "Full Stack Engineer", "es": "Programador Full Stack" },
       "location": "Austin, Texas, USA",
       "remote": true,
       "startDate": "2021-06",
       "endDate": "2023-02",
       "description": {
-        "en": "The group's original platform, the foundation THIIO evolved from.",
-        "es": "Plataforma original del grupo, base de la que evolucionó THIIO."
+        "en": "Multi-tenant SaaS platform for building funnels, stores, blogs, and membership areas with a visual page editor.",
+        "es": "Plataforma SaaS multi-tenant para crear funnels, tiendas, blogs y áreas de miembros con un editor visual de páginas."
       },
       "highlights": {
         "en": [
-          "Migrated the page editor from raw HTML construction to Blade (Laravel), laying the groundwork for a reusable component-runtime system — the architecture that later evolved into THIIO.",
-          "Designed and built the blog module: a simplified funnel type with posts rendered via TipTap, consumed directly by published pages."
+          "Built the blog module: a simplified funnel type with a Laravel-based builder, post components, recent posts, related posts, categories, and search. These components render on published pages. Includes admin management with blog duplication, custom domain and route, and translations.",
+          "Designed and implemented a real-time editing lock service with Socket.IO and Redis. Prevents two users from editing the same page or layout at once, with per-page rooms and automatic release on disconnect. The editor shows who holds the page, and an admin can release the session.",
+          "Developed the rendering of visual editor pages into Blade views. Uses per-tenant layouts, cached shortcodes, draft/published versioning, and asynchronous publishing via queues and Cloud Tasks.",
+          "Built editor components in Vue 2 and Vuex with their own preview: forms, lead capture, survey, gallery, headers, and checkout. Also worked on the platform's other modules: store, membership area, funnels, payments and integrations, admin panel, and page statistics (split testing and IP blocking)."
         ],
         "es": [
-          "Migré el editor de páginas de construcción de HTML puro a Blade (Laravel), sentando las bases de un sistema de componentes con runtime reutilizable — la arquitectura sobre la que después evolucionó THIIO.",
-          "Diseñé y construí el módulo de blog: un tipo de funnel simplificado con posts renderizados vía TipTap, consumidos directamente por las páginas publicadas."
+          "Construí el módulo de blog: un tipo de funnel simplificado con builder en Laravel, componentes de posts, posts recientes, relacionados, categorías y búsqueda. Estos componentes se renderizan en las páginas publicadas. Incluye la administración desde el panel, con duplicado de blogs, dominio y ruta personalizados, y traducciones.",
+          "Diseñé e implementé un servicio de bloqueo de edición en tiempo real con Socket.IO y Redis. Impide que dos usuarios editen la misma página o layout a la vez, con salas por página y liberación automática al desconectarse. El editor muestra quién tiene la página, y un admin puede liberar la sesión.",
+          "Desarrollé la generación de páginas del editor visual a vistas Blade. Usa layouts por tenant, shortcodes con caché, versionado draft/publicado y publicación asíncrona con colas y Cloud Tasks.",
+          "Creé componentes del editor en Vue 2 y Vuex, con preview propio: formularios, lead capture, survey, galería, headers y checkout. También trabajé en los demás módulos de la plataforma: tienda, área de miembros, funnels, pagos e integraciones, panel de administración y estadísticas de páginas (split test y bloqueo de IP)."
         ]
       },
-      "stack": ["PHP", "Laravel", "Vue", "React", "MySQL", "Docker", "Shopify", "WordPress"]
+      "stack": [
+        "PHP",
+        "Laravel",
+        "Blade",
+        "Eloquent",
+        "Passport",
+        "Queues/Horizon",
+        "Artisan",
+        "PHPUnit",
+        "JavaScript",
+        "Node.js",
+        "Express",
+        "TypeORM",
+        "Vue 2",
+        "Vuex",
+        "Vue Router",
+        "Vuetify",
+        "VeeValidate",
+        "Tailwind CSS",
+        "Socket.IO",
+        "Pusher",
+        "MySQL",
+        "Redis",
+        "Docker Compose",
+        "Nginx",
+        "Google Cloud",
+        "Cloud Tasks",
+        "Cloud Run",
+        "Stripe",
+        "PayPal",
+        "Braintree",
+        "Shopify",
+        "WooCommerce"
+      ]
     },
     {
       "company": "Tangente México",
+      "url": "https://tangentemexico.com/",
       "role": { "en": "Frontend Developer", "es": "Programador Frontend" },
       "location": "Saltillo, Coahuila",
       "remote": true,
@@ -80,6 +147,7 @@
     },
     {
       "company": "Universidad Tecnológica de Parras de la Fuente",
+      "url": "https://www.utparras.edu.mx/",
       "role": { "en": "Systems Coordinator", "es": "Coordinador de Sistemas" },
       "location": "Parras, Coahuila",
       "remote": false,
@@ -185,7 +253,7 @@
       "SQL": ["PostgreSQL", "MySQL"],
       "NoSQL": ["MongoDB", "Redis", "Firebase (Firestore)"]
     },
-    "Cloud & Infra": ["Cloudflare Workers", "Workers KV", "D1 (SQL)", "R2 (storage)", "Durable Objects", "Cloudflare Pages", "Cloudflare Queues", "AWS", "Google Cloud", "DigitalOcean", "Supabase", "Linux", "Ubuntu Server", "Windows Server", "Docker Compose", "Multi-stage builds", "Coolify", "Raspberry Pi", "Nginx", "Apache"],
+    "Cloud & Infra": ["Cloudflare Workers", "Workers KV", "D1 (SQL)", "R2 (storage)", "Durable Objects", "Cloudflare Pages", "Cloudflare Queues", "AWS", "Google Cloud", "Cloud Tasks", "Cloud Run", "DigitalOcean", "Supabase", "Linux", "Ubuntu Server", "Windows Server", "Docker Compose", "Multi-stage builds", "Coolify", "Raspberry Pi", "Nginx", "Apache"],
     "DevOps / CI-CD": ["GitHub Actions"],
     "Testing": ["Playwright"],
     "Auth & Security": ["OAuth", "JWT", "SSH", "Seguridad informática"],

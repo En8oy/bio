@@ -6,7 +6,9 @@ import { gsap, prefersReducedMotion, revealOnScroll } from "../../lib/motion";
 
 const resume = resumeData as any;
 
-const ACCENT = "#f5a97f";
+// Kept in sync with --om-accent in dotfiles.css — only used here to push
+// the same brand color into the shared <nav-switcher> via --color-accent.
+const ACCENT = "#00aa8a";
 
 const ICON_DOWNLOAD = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>`;
 const ICON_PLAY = html`<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7Z" /></svg>`;
@@ -41,9 +43,11 @@ export class DotfilesApp extends LitElement {
     super.connectedCallback();
     this.lang = getStoredLang();
     window.addEventListener("lang-change", this.langHandler);
-    this.style.setProperty("--om-accent", ACCENT);
     // The shared <nav-switcher> is the only header — make it follow this
-    // world's accent instead of adding a second nav bar.
+    // world's accent instead of adding a second nav bar. (--om-accent
+    // itself is owned by dotfiles.css directly, not set from here — a
+    // same-element CSS declaration always wins over an inherited inline
+    // style, so setting it on `this` had no effect.)
     document.documentElement.style.setProperty("--color-accent", ACCENT);
     document.documentElement.style.setProperty("--color-accent-contrast", "#1a1308");
   }
@@ -85,11 +89,11 @@ export class DotfilesApp extends LitElement {
         <section id="om-experience" class="om-section">
           <h2 class="om-section-title">${u("experience")}</h2>
           <div class="om-card-grid">
-            ${resume.experience.map(
-              (exp: any) => html`
-                <article class="om-card">
+            ${resume.experience.slice(0, 2).map(
+              (exp: any, i: number) => html`
+                <article class="om-card ${i === 0 ? "om-card--featured" : ""}">
                   <div class="om-card-head">
-                    <h3>${exp.company}</h3>
+                    <h3>${exp.url ? html`<a href="${exp.url}" target="_blank" rel="noreferrer">${exp.company}</a>` : exp.company}</h3>
                     <span class="om-dates">${exp.startDate} — ${exp.endDate ?? u("present")}</span>
                   </div>
                   <p class="om-role">${t(exp.role, lang)}</p>
@@ -100,6 +104,25 @@ export class DotfilesApp extends LitElement {
                 </article>
               `
             )}
+            <!-- Tangente México + UT Parras are both short — one combined
+                 card instead of two mostly-empty ones. -->
+            <article class="om-card om-card--combo">
+              ${resume.experience.slice(2).map(
+                (exp: any) => html`
+                  <div class="om-combo-item">
+                    <div class="om-card-head">
+                      <h3>${exp.url ? html`<a href="${exp.url}" target="_blank" rel="noreferrer">${exp.company}</a>` : exp.company}</h3>
+                      <span class="om-dates">${exp.startDate} — ${exp.endDate ?? u("present")}</span>
+                    </div>
+                    <p class="om-role">${t(exp.role, lang)}</p>
+                    <ul>
+                      ${tList(exp.highlights, lang).map((h: string) => html`<li>${h}</li>`)}
+                    </ul>
+                    <div class="om-tags">${exp.stack.map((s: string) => html`<span class="om-tag">${s}</span>`)}</div>
+                  </div>
+                `
+              )}
+            </article>
           </div>
         </section>
 

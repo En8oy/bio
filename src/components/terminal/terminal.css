@@ -23,7 +23,6 @@
 .hypr-frame {
   width: 100%;
   max-width: none;
-  width: 100%;
   border-radius: 14px;
   background: color-mix(in srgb, var(--neutral-950) 96%, var(--brand-primary));
   box-shadow:
@@ -263,8 +262,16 @@
 }
 
 .hypr-ascii {
+  /* Only this element is pinned dark, not the page — at 3.2px a mid-tone
+     violet on the light theme's near-white background had almost no
+     visible weight (that's what made it hard to see). A fixed dark
+     backdrop + bright text keeps it legible in both themes, the same way
+     a code block often stays dark on an otherwise light page. */
   margin: 0;
-  color: var(--brand-primary);
+  padding: 6px;
+  background: var(--neutral-950);
+  border-radius: 4px;
+  color: #d8d4ff;
   font-size: 3.2px;
   line-height: 1.1;
   letter-spacing: 0;
@@ -311,6 +318,16 @@
   font-weight: 700;
   margin: 0 0 2px;
   font-size: 0.84rem;
+}
+
+.t-block-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.t-block-title a:hover {
+  color: var(--brand-primary);
+  text-decoration: underline;
 }
 
 .t-block ul {

@@ -67,13 +67,18 @@ export default function CandyBrandApp({ photoSrc = "/profile.jpg" }: Props) {
       <section className="candy-section">
         <h2 className="candy-heading">{u("experience")}</h2>
         <div className="candy-stack">
-          {resume.experience.map((exp, i) => {
-            const sizeClass =
-              i === 0 ? "candy-card--featured" : i === resume.experience.length - 1 ? "candy-card--wide" : "";
-            return (
-            <article className={`candy-card ${sizeClass}`} key={exp.company}>
+          {resume.experience.slice(0, 2).map((exp, i) => (
+            <article className={`candy-card ${i === 0 ? "candy-card--featured" : "candy-card--tall"}`} key={exp.company}>
               <div className="candy-card-head">
-                <h3>{exp.company}</h3>
+                <h3>
+                  {exp.url ? (
+                    <a href={exp.url} target="_blank" rel="noreferrer">
+                      {exp.company}
+                    </a>
+                  ) : (
+                    exp.company
+                  )}
+                </h3>
                 <span className="candy-dates">
                   {exp.startDate} — {exp.endDate ?? u("present")}
                 </span>
@@ -93,8 +98,42 @@ export default function CandyBrandApp({ photoSrc = "/profile.jpg" }: Props) {
                 ))}
               </div>
             </article>
-            );
-          })}
+          ))}
+          {/* Tangente México + UT Parras are both short entries — one
+              combined card instead of two nearly-empty ones. */}
+          <article className="candy-card candy-card--combo">
+            {resume.experience.slice(2).map((exp) => (
+              <div className="candy-combo-item" key={exp.company}>
+                <div className="candy-card-head">
+                  <h3>
+                    {exp.url ? (
+                      <a href={exp.url} target="_blank" rel="noreferrer">
+                        {exp.company}
+                      </a>
+                    ) : (
+                      exp.company
+                    )}
+                  </h3>
+                  <span className="candy-dates">
+                    {exp.startDate} — {exp.endDate ?? u("present")}
+                  </span>
+                </div>
+                <p className="candy-role">{t(exp.role, lang)}</p>
+                <ul>
+                  {tList(exp.highlights, lang).map((h, hi) => (
+                    <li key={hi}>{h}</li>
+                  ))}
+                </ul>
+                <div className="candy-tags">
+                  {exp.stack.map((s) => (
+                    <span className="candy-tag" key={s}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </article>
         </div>
       </section>
 

@@ -155,7 +155,8 @@ export class TerminalApp extends LitElement {
                 (exp: any) => html`
                   <div class="t-block">
                     <h3 class="t-block-title">
-                      ${exp.company} <span class="t-dim">(${exp.startDate} — ${exp.endDate ?? u("present")})</span>
+                      ${exp.url ? html`<a href="${exp.url}" target="_blank" rel="noreferrer">${exp.company}</a>` : exp.company}
+                      <span class="t-dim">(${exp.startDate} — ${exp.endDate ?? u("present")})</span>
                     </h3>
                     <p class="t-dim">${t(exp.role, lang)}</p>
                     <ul>
