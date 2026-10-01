@@ -1,0 +1,18 @@
+---
+import { getImage } from "astro:assets";
+import DesignLayout from "../../layouts/DesignLayout.astro";
+import NeonApp from "../../components/neon/NeonApp.vue";
+import profileSrc from "../../assets/profile.jpg";
+
+const photo = await getImage({ src: profileSrc, width: 280, height: 280, format: "webp" });
+
+const fontHref = "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap";
+---
+
+<DesignLayout
+  title="Irbing Moreno — Neon"
+  description="Irbing Moreno, Senior Full Stack Engineer — Neon edition: a dark cyan/purple gradient resume built with Vue, inspired by hypr.land. 8+ years in Laravel and AI-integrated SaaS platforms."
+  fontHref={fontHref}
+>
+  <NeonApp client:load photoSrc={photo.src} />
+</DesignLayout>

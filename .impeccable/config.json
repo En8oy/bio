@@ -1,0 +1,50 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "baloo 2",
+        "createdAt": "2026-10-01T19:27:39.601Z",
+        "reason": "Documented intentionally in DESIGN.md Overview/Typography as Candy Brand's only actually-loaded webfont pair; frontmatter sync is tracked separately as a P3 audit item"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "nunito",
+        "createdAt": "2026-10-01T19:27:39.606Z",
+        "reason": "Documented intentionally in DESIGN.md Overview/Typography as Candy Brand's only actually-loaded webfont pair; frontmatter sync is tracked separately as a P3 audit item"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "plus jakarta sans",
+        "createdAt": "2026-10-01T19:34:23.375Z",
+        "reason": "User-directed redesign of Terminal Dev to a Caelestia Shell (Material You) look; DESIGN.md update to record the new typography is a pending follow-up"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "onest",
+        "createdAt": "2026-10-01T19:35:24.830Z",
+        "reason": "User-directed redesign of Terminal Dev to a Caelestia Shell (Material You) look; swapped from Plus Jakarta Sans after the detector flagged it as an overused AI-slop face. DESIGN.md typography sync is a pending follow-up"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "sora",
+        "createdAt": "2026-10-01T19:59:00.718Z",
+        "reason": "User-directed new world replacing Bento Grid, styled after hypr.land (confirmed via live fetch of hypr.land's actual design). DESIGN.md typography sync is a pending follow-up, same as Terminal Dev's font divergence earlier this session"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "manrope",
+        "createdAt": "2026-10-01T20:06:39.609Z",
+        "reason": "New 4th world (Omarchy, user-directed, styled after omarchy.mx) added alongside Candy Brand/Terminal Dev/Hyprland. DESIGN.md typography sync is a pending follow-up covering all 4 worlds now."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "ibm plex mono",
+        "createdAt": "2026-10-01T20:10:03.318Z",
+        "reason": "Omarchy world rebuilt from a verified live screenshot of omarchy.mx (monospace site). Replaces the earlier Manrope attempt. DESIGN.md typography sync still pending."
+      }
+    ]
+  }
+}

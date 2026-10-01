@@ -1,0 +1,356 @@
+/* Terminal Dev world: a real tiling-WM terminal screenshot (foot + btop/
+   fastfetch style) — one glowing-bordered window, thin TUI panel borders
+   with corner-overlapped labels, dense monospace info, pastel-on-navy. */
+
+/* Font is loaded via a <link> in DesignLayout (terminal-dev.astro's
+   fontHref prop), not @import — see candy-brand.css for why. */
+
+.hypr-desktop {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--brand-primary) 14%, var(--neutral-950)), var(--neutral-950) 65%);
+  padding: 104px 10px 24px;
+  font-family: "JetBrains Mono", var(--font-mono);
+}
+
+:root:not([data-theme="dark"]) .hypr-desktop {
+  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--brand-primary) 8%, var(--neutral-50)), var(--neutral-50) 65%);
+}
+
+/* The glowing window frame — the single "terminal emulator" everything
+   lives inside, mirroring a foot/kitty window with an active-border glow. */
+.hypr-frame {
+  width: 100%;
+  max-width: none;
+  width: 100%;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--neutral-950) 96%, var(--brand-primary));
+  box-shadow:
+    0 0 0 1.5px color-mix(in srgb, var(--brand-primary) 70%, var(--brand-secondary)),
+    0 0 28px 2px color-mix(in srgb, var(--brand-primary) 45%, transparent),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+:root:not([data-theme="dark"]) .hypr-frame {
+  background: color-mix(in srgb, var(--neutral-50) 96%, var(--brand-primary));
+}
+
+.hypr-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent);
+}
+
+.hypr-workspaces {
+  display: flex;
+  gap: 3px;
+}
+
+.hypr-ws {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hypr-ws:hover,
+.hypr-ws:focus-visible {
+  background: color-mix(in srgb, var(--brand-primary) 25%, transparent);
+  color: var(--brand-primary);
+}
+
+.hypr-clock {
+  color: var(--brand-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Decorative window-chrome controls (minimize/maximize/close) — spans, not
+   buttons, since they don't do anything on a static page; aria-hidden on
+   the group marks them as chrome rather than real controls. */
+.hypr-win-controls {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.hypr-win-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+
+.hypr-win-btn svg {
+  width: 6px;
+  height: 6px;
+  stroke: rgba(0, 0, 0, 0.45);
+  stroke-width: 1.4;
+  fill: none;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.hypr-win-controls:hover .hypr-win-btn svg {
+  opacity: 1;
+}
+
+.hypr-win-btn--min {
+  background: #ffbd2e;
+}
+
+.hypr-win-btn--max {
+  background: #27c93f;
+}
+
+.hypr-win-btn--max svg {
+  fill: rgba(0, 0, 0, 0.45);
+}
+
+.hypr-win-btn--close {
+  background: #ff5f56;
+}
+
+.hypr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "profile profile profile"
+    "experience experience skills"
+    "experience experience projects";
+  gap: 2px;
+  padding: 2px;
+}
+
+.hypr-window--profile {
+  grid-area: profile;
+}
+.hypr-window--experience {
+  grid-area: experience;
+}
+.hypr-window--skills {
+  grid-area: skills;
+}
+.hypr-window--projects {
+  grid-area: projects;
+}
+
+@media (max-width: 860px) {
+  .hypr-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  .hypr-window--profile,
+  .hypr-window--experience,
+  .hypr-window--skills,
+  .hypr-window--projects {
+    grid-area: auto;
+  }
+}
+
+/* A single TUI panel — thin rounded border, label cut into the top edge
+   (the classic btop/TUI technique), no blur or card-shadow separation. */
+.hypr-window {
+  position: relative;
+  background: color-mix(in srgb, var(--brand-primary) 5%, transparent);
+  /* was color-mix(... var(--neutral-700)) — that token doesn't exist in
+     tokens.css (scale jumps 600→800), so the whole color-mix() was invalid
+     and the border rendered as nothing. That's why panels had no visible
+     division. Using a real token + higher opacity for a clearly visible line. */
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 50%, var(--neutral-600));
+  border-radius: 0;
+  scroll-margin-top: 110px;
+}
+
+/* Flush, in-flow pane header (not overlapping the border) so panes with a
+   2px gap between them don't collide — a tmux pane's title line, not a
+   floating card label. */
+.hypr-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--brand-primary) 30%, var(--neutral-600));
+  color: var(--brand-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.hypr-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.t-prompt {
+  color: var(--brand-secondary);
+  font-weight: 700;
+  margin-right: 2px;
+}
+
+.hypr-body {
+  padding: 16px 14px 12px;
+  color: var(--color-text);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+/* Experience used to be capped at max-height with its own scrollbar, which
+   cropped content and looked wrong next to shorter panels. Let it grow to
+   its real content height instead — the grid row just gets taller. */
+
+.hypr-profile-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hypr-summary {
+  margin: 14px 0 0;
+  max-width: 70ch;
+  color: var(--color-text);
+}
+
+.hypr-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.hypr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in srgb, var(--brand-primary) 45%, var(--neutral-600));
+  color: var(--color-text);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+}
+
+.hypr-btn:hover,
+.hypr-btn:focus-visible {
+  background: color-mix(in srgb, var(--brand-primary) 18%, transparent);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.hypr-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.hypr-ascii {
+  margin: 0;
+  color: var(--brand-primary);
+  font-size: 3.2px;
+  line-height: 1.1;
+  letter-spacing: 0;
+  white-space: pre;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+/* Scrollbar theming is now global (src/styles/tokens.css), reading
+   --color-accent site-wide — this world's local-only version is gone. */
+
+@media (max-width: 860px) {
+  .hypr-ascii {
+    font-size: 2.4px;
+  }
+}
+
+.t-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 2px;
+}
+
+.t-role {
+  color: var(--brand-primary);
+  font-weight: 500;
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.t-dim {
+  color: var(--color-text-muted);
+}
+
+.t-block + .t-block {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed color-mix(in srgb, var(--color-text) 14%, transparent);
+}
+
+.t-block-title {
+  color: var(--color-text);
+  font-weight: 700;
+  margin: 0 0 2px;
+  font-size: 0.84rem;
+}
+
+.t-block ul {
+  margin: 6px 0;
+  padding-left: 16px;
+}
+
+.t-tags {
+  color: var(--brand-secondary);
+  font-size: 0.7rem;
+  margin: 6px 0 0;
+}
+
+.hypr-skills p {
+  margin: 3px 0;
+  font-size: 0.78rem;
+}
+
+.t-key {
+  color: var(--brand-primary);
+}
+
+.hypr-body a {
+  color: var(--brand-primary);
+}
+
+.hypr-cursor-line {
+  margin: 10px 2px 0;
+  padding: 2px 4px;
+  font-size: 0.82rem;
+  color: var(--color-text);
+}
+
+.t-blink {
+  color: var(--brand-primary);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}

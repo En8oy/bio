@@ -1,0 +1,200 @@
+{
+  "basics": {
+    "name": "Irbing Alejandro Moreno García",
+    "title": { "en": "Senior Full Stack Engineer", "es": "Senior Full Stack Developer" },
+    "location": { "en": "Parras de la Fuente, Coahuila, Mexico", "es": "Parras de la Fuente, Coahuila, México" },
+    "remote": { "en": "Open to remote work", "es": "Disponible para trabajo remoto" },
+    "email": "irbing.moreno@outlook.com",
+    "phone": "+52 842 115 2482",
+    "linkedin": "https://linkedin.com/in/en8oy",
+    "github": "https://github.com/En8oy",
+    "summary": {
+      "en": "Full stack developer with 8+ years building end-to-end web products, the last five remote with US-based teams. Specialized in high-performance architectures for marketing SaaS platforms — edge computing, Web Components, Cloudflare Workers — and in integrating AI into the product lifecycle. Unlike most developers, understands the business behind the product: funnels, conversion, attribution, and growth.",
+      "es": "Desarrollador full stack con más de 8 años construyendo productos web de punta a punta, los últimos cinco en remoto con equipos de Estados Unidos. Especializado en arquitecturas de alto rendimiento para plataformas SaaS de marketing (edge computing, Web Components, Cloudflare Workers) y en integrar IA en el ciclo de producto. A diferencia de la mayoría de los desarrolladores, entiende el negocio detrás del producto: embudos, conversión, atribución y crecimiento."
+    }
+  },
+  "experience": [
+    {
+      "company": "THIIO",
+      "role": { "en": "Senior Full Stack Engineer", "es": "Programador Senior Full Stack" },
+      "location": "Austin, Texas, USA",
+      "remote": true,
+      "startDate": "2023-02",
+      "endDate": null,
+      "description": {
+        "en": "AI-native marketing funnel platform (includes THIIO-MARTECH, the team focused on martech development services for external clients). Brands running their funnels on the platform include Yoli, Diabetes Freedom, and Barton Publishing.",
+        "es": "Plataforma de embudos de marketing con IA (incluye THIIO-MARTECH, el equipo enfocado en servicios de desarrollo martech para clientes externos). Entre las marcas que operan sus funnels en la plataforma están Yoli, Diabetes Freedom y Barton Publishing."
+      },
+      "highlights": {
+        "en": [
+          "Led a team of developers migrating the rendering architecture from a monolithic Vue runtime to Web Components (Lit) served per page via Cloudflare Workers, achieving PageSpeed scores of 95+ on mobile and 100 on desktop consistently across all published pages.",
+          "Redesigned the component editor to support AI-assisted customization, replacing rigid team-built themes with client-owned design — increasing client engagement with the platform and helping attract new clients through their own designs.",
+          "Implemented an edge manifest architecture (a JSON file served from Cloudflare) that eliminated redundant middleware on published pages, reducing unnecessary backend requests.",
+          "As part of THIIO-MARTECH, led teams on external client projects: for Gigz (a platform connecting brands, fans, and venue owners to organize concerts), migrated a Laravel 6 monolith to Laravel 12 with a decoupled Vue CLI frontend; for hbdr, resolved duplicate-data triangulation in referral campaigns imported from Google Analytics."
+        ],
+        "es": [
+          "Lideré a un equipo de desarrolladores en la migración de la arquitectura de renderizado de un runtime monolítico de Vue a Web Components (Lit) servidos por página vía Cloudflare Workers, logrando calificaciones de PageSpeed de 95+ en móvil y 100 en desktop de forma consistente en todas las páginas publicadas.",
+          "Rediseñé el editor de componentes para permitir personalización asistida por IA, reemplazando temas rígidos hechos por el equipo con diseño propio del cliente, lo que aumentó su compromiso con la plataforma y ayudó a atraer nuevos clientes a través de sus propios diseños.",
+          "Implementé una arquitectura de manifest en el edge (JSON servido desde Cloudflare) que eliminó middlewares redundantes en páginas publicadas, reduciendo peticiones innecesarias al backend.",
+          "Como parte de THIIO-MARTECH, lideré equipos en proyectos de clientes externos: para Gigz (plataforma que conecta marcas, fans y dueños de recintos para organizar conciertos), migré un monolito en Laravel 6 a Laravel 12 con frontend desacoplado en Vue CLI; para hbdr, resolví la triangulación de datos duplicados en campañas de referidos importados desde Google Analytics."
+        ]
+      },
+      "stack": ["Laravel", "Vue", "Astro", "Lit", "Node.js", "Python", "MySQL", "Cloudflare Workers", "MCP/Claude Code", "Shopify/GoHighLevel"]
+    },
+    {
+      "company": "WebforceHQ",
+      "role": { "en": "Full Stack Engineer", "es": "Programador Full Stack" },
+      "location": "Austin, Texas, USA",
+      "remote": true,
+      "startDate": "2021-06",
+      "endDate": "2023-02",
+      "description": {
+        "en": "The group's original platform, the foundation THIIO evolved from.",
+        "es": "Plataforma original del grupo, base de la que evolucionó THIIO."
+      },
+      "highlights": {
+        "en": [
+          "Migrated the page editor from raw HTML construction to Blade (Laravel), laying the groundwork for a reusable component-runtime system — the architecture that later evolved into THIIO.",
+          "Designed and built the blog module: a simplified funnel type with posts rendered via TipTap, consumed directly by published pages."
+        ],
+        "es": [
+          "Migré el editor de páginas de construcción de HTML puro a Blade (Laravel), sentando las bases de un sistema de componentes con runtime reutilizable — la arquitectura sobre la que después evolucionó THIIO.",
+          "Diseñé y construí el módulo de blog: un tipo de funnel simplificado con posts renderizados vía TipTap, consumidos directamente por las páginas publicadas."
+        ]
+      },
+      "stack": ["PHP", "Laravel", "Vue", "React", "MySQL", "Docker", "Shopify", "WordPress"]
+    },
+    {
+      "company": "Tangente México",
+      "role": { "en": "Frontend Developer", "es": "Programador Frontend" },
+      "location": "Saltillo, Coahuila",
+      "remote": true,
+      "startDate": "2020-05",
+      "endDate": "2020-12",
+      "description": null,
+      "highlights": {
+        "en": ["Launched Fondiux, an Uber-Eats-style marketplace for local restaurants and small eateries to manage orders and promote their products online."],
+        "es": ["Inicié Fondiux, un marketplace tipo Uber Eats para que restaurantes y cocinas económicas locales gestionaran pedidos y promocionaran sus productos en línea."]
+      },
+      "stack": ["Vue", "Vuetify", "Ionic", "Bootstrap", ".NET"]
+    },
+    {
+      "company": "Universidad Tecnológica de Parras de la Fuente",
+      "role": { "en": "Systems Coordinator", "es": "Coordinador de Sistemas" },
+      "location": "Parras, Coahuila",
+      "remote": false,
+      "startDate": "2017-09",
+      "endDate": "2021-04",
+      "description": {
+        "en": "Combined role spanning development, server administration, and systems support.",
+        "es": "Rol combinado de desarrollo, administración de servidores y soporte de sistemas."
+      },
+      "highlights": {
+        "en": [
+          "Built Vinculación, a system connecting universities, companies, and students: generated real-time resumes from students' academic records, solving companies' difficulty finding qualified candidates.",
+          "Implemented Active Directory across the university's computers, migrating them to open-source OS images and eliminating the institution's prior use of pirated software."
+        ],
+        "es": [
+          "Desarrollé Vinculación, un sistema que conectaba universidades, empresas y estudiantes: generaba currículums en tiempo real a partir del historial académico de los alumnos, resolviendo la dificultad de las empresas para encontrar candidatos calificados.",
+          "Implementé Active Directory en los equipos de la universidad, migrando los equipos a imágenes de sistema operativo con software libre y eliminando el uso previo de software pirata en la institución."
+        ]
+      },
+      "stack": ["PHP", "Laravel", "Vue", "MySQL", "Linux", "Windows Server", "Active Directory"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Stonks",
+      "description": {
+        "en": "Personal finance app centralizing expenses, bank savings, credit cards, and investment portfolio in one place, filling a gap existing finance apps don't cover.",
+        "es": "App financiera personal que centraliza gastos, ahorros bancarios, tarjetas de crédito y portafolio de inversión en un solo lugar, cubriendo un hueco que no resuelven las apps financieras existentes."
+      },
+      "status": { "en": "in development", "es": "en desarrollo" },
+      "highlights": {
+        "en": [
+          "Built scheduled jobs that scrape Yahoo Finance and Google Finance for real-time and historical data on stocks, crypto, ETFs, and FIBRAs, avoiding the cost of paid financial APIs.",
+          "In development: voice-based activity logging via Telegram/WhatsApp chatbots orchestrated with n8n."
+        ],
+        "es": [
+          "Implementé jobs programados que hacen web scraping a Yahoo Finance y Google Finance para obtener datos en tiempo real e históricos de acciones, criptomonedas, ETFs y FIBRAs, evitando el costo de APIs financieras de pago.",
+          "En desarrollo: registro de actividad por voz vía chatbots de Telegram/WhatsApp orquestados con n8n."
+        ]
+      },
+      "stack": ["Laravel", "React Native", "n8n"]
+    },
+    {
+      "name": "DashPhone",
+      "description": {
+        "en": "Turns a phone into a dashcam, recording front and rear cameras simultaneously. Code complete and available in a repository; not yet published to app stores.",
+        "es": "Convierte el celular en dashcam, grabando simultáneamente cámara frontal y trasera. Código terminado y disponible en repositorio; aún no publicada en tiendas de aplicaciones."
+      },
+      "status": { "en": "completed", "es": "terminada" },
+      "highlights": {
+        "en": [
+          "Designed background loop recording with automatic storage management.",
+          "Optimized battery consumption in multi-camera high-resolution recording with a reduced-resolution default (full-resolution option available to the user)."
+        ],
+        "es": [
+          "Diseñé la grabación cíclica en segundo plano con gestión automática de almacenamiento.",
+          "Optimicé el consumo de batería en grabación multi-cámara con una resolución reducida por defecto (opción de resolución completa para el usuario)."
+        ]
+      },
+      "stack": ["React Native"]
+    }
+  ],
+  "education": [
+    {
+      "degree": { "en": "B.S. in Information Technology", "es": "Ingeniería en Tecnologías de la Información" },
+      "institution": "Universidad Tecnológica de Parras de la Fuente",
+      "startDate": "2018-09",
+      "endDate": "2020-05"
+    },
+    {
+      "degree": { "en": "Associate Degree in Information and Communication Technology", "es": "T.S.U. en Tecnologías de la Información y Comunicación" },
+      "institution": "Universidad Tecnológica de Parras de la Fuente",
+      "startDate": "2015-08",
+      "endDate": "2017-08"
+    }
+  ],
+  "courses": [
+    { "name": "Claude Code", "date": "2025-11" },
+    { "name": "n8n", "date": "2025-06" },
+    { "name": { "en": "Professional Scrum", "es": "Scrum Profesional" }, "date": "2025-12" },
+    { "name": { "en": "Python Fundamentals", "es": "Fundamentos de Python" }, "date": "2026-01" }
+  ],
+  "languages": [
+    { "language": { "en": "Spanish", "es": "Español" }, "level": { "en": "native", "es": "nativo" } },
+    { "language": { "en": "English", "es": "Inglés" }, "level": { "en": "intermediate (B1-B2)", "es": "intermedio (B1-B2)" } }
+  ],
+  "skills": {
+    "Languages": ["PHP", "JavaScript", "TypeScript", "Python", "C#"],
+    "Frontend": {
+      "Frameworks": ["Vue", "React", "Angular", "Astro", "Lit (Web Components)"],
+      "Ecosystem": ["Pinia", "Vuex", "Vue Router", "Nuxt", "Vite", "Vuetify", "VeeValidate", "Vue Test Utils", "Redux", "Zustand", "React Query / TanStack Query", "Context API", "React Hook Form", "Next.js", "shadcn/ui", "GSAP"],
+      "Styling": ["Tailwind CSS", "Bootstrap"]
+    },
+    "Backend": {
+      "Frameworks": ["Laravel", "Express", "NestJS", "AdonisJS", "FastAPI", "Django", "Flask", "ASP.NET Core"],
+      "Ecosystem": ["Eloquent ORM", "Sanctum", "Passport", "Queues/Horizon", "Blade", "Livewire", "Inertia.js", "Artisan (custom commands)", "Laravel Nova", "Laravel Octane", "Pest/PHPUnit", "Laravel Forge/Vapor", "TypeORM", "Socket.io", "Entity Framework"]
+    },
+    "Mobile": {
+      "Frameworks": ["React Native", "Ionic"],
+      "Ecosystem": ["Redux", "Zustand", "React Query / TanStack Query", "Context API", "React Navigation", "Expo"]
+    },
+    "Databases": {
+      "SQL": ["PostgreSQL", "MySQL"],
+      "NoSQL": ["MongoDB", "Redis", "Firebase (Firestore)"]
+    },
+    "Cloud & Infra": ["Cloudflare Workers", "Workers KV", "D1 (SQL)", "R2 (storage)", "Durable Objects", "Cloudflare Pages", "Cloudflare Queues", "AWS", "Google Cloud", "DigitalOcean", "Supabase", "Linux", "Ubuntu Server", "Windows Server", "Docker Compose", "Multi-stage builds", "Coolify", "Raspberry Pi", "Nginx", "Apache"],
+    "DevOps / CI-CD": ["GitHub Actions"],
+    "Testing": ["Playwright"],
+    "Auth & Security": ["OAuth", "JWT", "SSH", "Seguridad informática"],
+    "Realtime": ["Pusher"],
+    "AI Tooling": ["MCP", "Claude / Claude Code", "Codex", "Cursor", "GitHub Copilot", "Spec-Driven Development"],
+    "Automation": ["n8n", "Make (Integromat)", "Zapier"],
+    "Marketing & Growth": ["Arquitectura de embudos", "Tracking server-side", "Facebook Pixel", "UTM y atribuciones"],
+    "Marketing Platforms": ["GoHighLevel", "ClickFunnels", "WordPress", "Elementor", "WooCommerce", "Shopify", "Magento"],
+    "Payment Gateways": ["Stripe", "PayPal", "Braintree"],
+    "Project Management": ["ClickUp", "Monday.com", "Jira"]
+  }
+}

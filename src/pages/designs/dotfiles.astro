@@ -1,0 +1,22 @@
+---
+import { getImage } from "astro:assets";
+import DesignLayout from "../../layouts/DesignLayout.astro";
+import "../../components/dotfiles/dotfiles.css";
+import profileSrc from "../../assets/profile.jpg";
+
+const photo = await getImage({ src: profileSrc, width: 240, height: 240, format: "webp" });
+
+const fontHref = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap";
+---
+
+<DesignLayout
+  title="Irbing Moreno — Dotfiles"
+  description="Irbing Moreno, Senior Full Stack Engineer — Dotfiles edition: a monospace Linux-rice resume built with Lit. 8+ years in Vue, Laravel, and AI-integrated SaaS platforms."
+  fontHref={fontHref}
+>
+  <dotfiles-app photo-src={photo.src}></dotfiles-app>
+</DesignLayout>
+
+<script>
+  import "../../components/dotfiles/dotfiles-app.ts";
+</script>

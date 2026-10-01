@@ -1,0 +1,68 @@
+---
+import { getImage } from "astro:assets";
+import resume from "../data/resume.json";
+import profileSrc from "../assets/profile.jpg";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = await getImage({ src: profileSrc, width: 1200, height: 1200, format: "webp" });
+const ogImageURL = new URL(ogImage.src, Astro.site);
+
+const title = "Irbing Moreno — Senior Full Stack Engineer";
+const description = resume.basics.summary.en;
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: resume.basics.name,
+  jobTitle: resume.basics.title.en,
+  description,
+  email: `mailto:${resume.basics.email}`,
+  image: ogImageURL.toString(),
+  url: canonicalURL.toString(),
+  sameAs: [resume.basics.github, resume.basics.linkedin],
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      iframe {
+        border: 0;
+        width: 100%;
+        height: 100vh;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="design-frame" src="/designs/terminal-dev" title={title}></iframe>
+  </body>
+</html>

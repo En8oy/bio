@@ -1,0 +1,94 @@
+---
+import { getImage } from "astro:assets";
+import "../styles/tokens.css";
+import resume from "../data/resume.json";
+import profileSrc from "../assets/profile.jpg";
+
+interface Props {
+  title: string;
+  bodyClass?: string;
+  /** Page-specific meta description (~150-160 chars). Falls back to the
+   * resume summary if a page doesn't pass one. */
+  description?: string;
+  /** Google Fonts stylesheet URL for this world's display/body font, if any.
+   * Loaded via <link> (parallel fetch) instead of a CSS @import, which is
+   * render-blocking and delays First Contentful Paint. */
+  fontHref?: string;
+}
+
+const { title, bodyClass = "", description = resume.basics.summary.en, fontHref } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// One shared OG/Twitter preview image, generated once here instead of once
+// per page — astro:assets caches identical transforms anyway, but this
+// keeps the four pages from each re-declaring the same getImage() call.
+const ogImage = await getImage({ src: profileSrc, width: 1200, height: 1200, format: "webp" });
+const ogImageURL = new URL(ogImage.src, Astro.site);
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: resume.basics.name,
+  jobTitle: resume.basics.title.en,
+  description: resume.basics.summary.en,
+  email: `mailto:${resume.basics.email}`,
+  image: ogImageURL.toString(),
+  url: canonicalURL.toString(),
+  sameAs: [resume.basics.github, resume.basics.linkedin],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+    <meta property="profile:first_name" content="Irbing" />
+    <meta property="profile:last_name" content="Moreno García" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+
+    {
+      fontHref && (
+        <>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link rel="stylesheet" href={fontHref} />
+        </>
+      )
+    }
+    <script is:inline>
+      // Set theme before first paint to avoid a flash of the wrong theme.
+      (function () {
+        var stored = localStorage.getItem("theme");
+        var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <nav-switcher></nav-switcher>
+    <slot />
+    <script>
+      import "../components/nav-switcher.ts";
+    </script>
+  </body>
+</html>

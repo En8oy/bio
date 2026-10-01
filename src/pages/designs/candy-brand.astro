@@ -1,0 +1,22 @@
+---
+import { getImage } from "astro:assets";
+import DesignLayout from "../../layouts/DesignLayout.astro";
+import CandyBrandApp from "../../components/candy/CandyBrandApp.tsx";
+import profileSrc from "../../assets/profile.jpg";
+
+// astro:assets resizes + re-encodes to WebP at build time instead of
+// shipping the raw 777x777 JPEG for a ~120px avatar — biggest single win
+// for this page's PageSpeed LCP/transfer-size score.
+const photo = await getImage({ src: profileSrc, width: 240, height: 240, format: "webp" });
+
+const fontHref =
+  "https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;700&display=swap";
+---
+
+<DesignLayout
+  title="Irbing Moreno — Candy Brand"
+  description="Irbing Moreno, Senior Full Stack Engineer — Candy Brand edition: a bold neubrutalist resume built with React. 8+ years in Vue, Laravel, and AI-integrated SaaS platforms."
+  fontHref={fontHref}
+>
+  <CandyBrandApp client:load photoSrc={photo.src} />
+</DesignLayout>
