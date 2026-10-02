@@ -1,96 +1,41 @@
 ---
 import { getImage } from "astro:assets";
-import resume from "../data/resume.json";
+import DesignLayout from "../layouts/DesignLayout.astro";
+import "../components/dotfiles/dotfiles.css";
 import profileSrc from "../assets/profile.jpg";
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImage = await getImage({ src: profileSrc, width: 1200, height: 1200, format: "webp" });
-const ogImageURL = new URL(ogImage.src, Astro.site);
-const favicon32 = await getImage({ src: profileSrc, width: 32, height: 32, format: "png" });
-// webp instead of png here — the 180x180 PNG came out at 75kB (lossless on
-// a detailed photo compresses badly); webp at quality 80 is ~10x smaller
-// and every browser that honors apple-touch-icon also supports webp.
-const appleTouchIcon = await getImage({ src: profileSrc, width: 180, height: 180, format: "webp", quality: 80 });
-
-const title = "Irbing Moreno — Senior Full Stack Engineer";
-const description = resume.basics.summary.en;
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: resume.basics.name,
-  jobTitle: resume.basics.title.en,
-  description,
-  email: `mailto:${resume.basics.email}`,
-  image: ogImageURL.toString(),
-  url: canonicalURL.toString(),
-  sameAs: [resume.basics.github, resume.basics.linkedin],
-};
-
-const DEFAULT_DESIGN = "dotfiles";
+// "/" renders the default world (Dotfiles) directly — the same component
+// /designs/dotfiles uses, not an iframe. An iframe-embedded page never
+// paints anything of its own on the top-level frame Lighthouse measures,
+// so "/" always scored NO_FCP even though the embedded page rendered fine.
+// ?design=<slug> picks a different world via the client script below,
+// which hands off to that world's own (already fast) page.
 const VALID_DESIGNS = ["candy-brand", "terminal-dev", "neon", "dotfiles"];
+
+const photo = await getImage({ src: profileSrc, width: 240, height: 240, format: "webp" });
+
+const fontHref = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href={favicon32.src} />
-    <link rel="apple-touch-icon" href={appleTouchIcon.src} />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+<DesignLayout
+  title="Irbing Moreno — Senior Full Stack Engineer"
+  fontHref={fontHref}
+>
+  <dotfiles-app photo-src={photo.src}></dotfiles-app>
+</DesignLayout>
 
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:image" content={ogImageURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1200" />
+<script define:vars={{ VALID_DESIGNS }}>
+  // Only redirects for a *non-default* ?design= — the default case needs
+  // no navigation at all, since this page already is that world.
+  const design = new URLSearchParams(window.location.search).get("design");
+  if (design && design !== "dotfiles" && VALID_DESIGNS.includes(design)) {
+    const forward = new URLSearchParams(window.location.search);
+    forward.delete("design");
+    const query = forward.toString();
+    window.location.replace(`/designs/${design}${query ? `?${query}` : ""}`);
+  }
+</script>
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
-
-    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
-
-    <style>
-      html,
-      body {
-        margin: 0;
-        height: 100%;
-      }
-      iframe {
-        border: 0;
-        width: 100%;
-        height: 100vh;
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <iframe id="design-frame" src={`/designs/${DEFAULT_DESIGN}`} title={title}></iframe>
-    <script define:vars={{ DEFAULT_DESIGN, VALID_DESIGNS }}>
-      // ?design=<slug>&lang=en|es&mode=light|dark on this page picks which
-      // design loads in the iframe and forwards lang/mode into its URL —
-      // the iframe has its own document/location, so query params on this
-      // page don't reach the embedded nav-switcher unless passed along.
-      const params = new URLSearchParams(window.location.search);
-      const design = params.get("design");
-      const slug = VALID_DESIGNS.includes(design) ? design : DEFAULT_DESIGN;
-
-      const forward = new URLSearchParams();
-      const lang = params.get("lang");
-      const mode = params.get("mode");
-      if (lang === "en" || lang === "es") forward.set("lang", lang);
-      if (mode === "light" || mode === "dark") forward.set("mode", mode);
-
-      const frame = document.getElementById("design-frame");
-      const query = forward.toString();
-      frame.src = `/designs/${slug}${query ? `?${query}` : ""}`;
-    </script>
-  </body>
-</html>
+<script>
+  import "../components/dotfiles/dotfiles-app.ts";
+</script>
