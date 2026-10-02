@@ -166,6 +166,12 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.hl-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .hl-btn--small {
   padding: 8px 16px;
   font-size: 0.82rem;
@@ -202,6 +208,10 @@
   margin: 0 auto;
   padding: 48px 24px;
   scroll-margin-top: 90px;
+}
+
+.hl-section:last-of-type {
+  padding-bottom: 72px;
 }
 
 .hl-section-title {
@@ -360,19 +370,3 @@
   color: var(--hl-text-muted);
 }
 
-.hl-footer {
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px 24px 72px;
-  border-top: 1px solid var(--hl-border);
-}
-
-.hl-social-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 24px;
-}

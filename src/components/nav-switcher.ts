@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { getStoredLang } from "../lib/i18n";
+import { getStoredLang, t, UI_STRINGS } from "../lib/i18n";
 
 type Theme = "light" | "dark";
 type Lang = "en" | "es";
@@ -17,6 +17,7 @@ const ICON_CLOSE = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColo
 // for an icon system) — replaces the ☀️/🌙 theme toggle added earlier.
 const ICON_SUN = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>`;
 const ICON_MOON = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79Z" /></svg>`;
+const ICON_DOWNLOAD = html`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12" /><path d="m7 10 5 5 5-5" /><path d="M5 21h14" /></svg>`;
 
 /**
  * <nav-switcher> is a framework-agnostic Web Component (Lit) embedded
@@ -98,6 +99,39 @@ export class NavSwitcher extends LitElement {
       gap: 6px;
       align-items: center;
       flex-shrink: 0;
+    }
+    .cv-link {
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid var(--color-accent, #6d5efc);
+      background: var(--color-accent, #6d5efc);
+      color: var(--color-accent-contrast, #fff);
+      padding: 6px 10px;
+      min-height: 32px;
+      border-radius: var(--radius-sm, 6px);
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: opacity 0.15s ease;
+    }
+    .cv-link:hover {
+      opacity: 0.85;
+    }
+    .cv-link svg {
+      width: 15px;
+      height: 15px;
+      vertical-align: -2px;
+    }
+    @media (pointer: coarse) {
+      .cv-link {
+        padding: 10px 14px;
+        min-height: 44px;
+      }
     }
     .hamburger {
       display: none;
@@ -261,6 +295,7 @@ export class NavSwitcher extends LitElement {
   private renderControls() {
     return html`
       <div class="controls">
+        <a class="cv-link" href="/resume/cv-${this.lang}.pdf" download>${ICON_DOWNLOAD}${t(UI_STRINGS.downloadCv, this.lang)}</a>
         <button @click=${() => this.setLang("en")} aria-current=${this.lang === "en" ? "true" : "false"}>EN</button>
         <button @click=${() => this.setLang("es")} aria-current=${this.lang === "es" ? "true" : "false"}>ES</button>
         <button

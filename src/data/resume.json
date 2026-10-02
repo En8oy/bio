@@ -131,6 +131,38 @@
       ]
     },
     {
+      "company": "Universidad Tecnológica de Parras de la Fuente",
+      "url": "https://www.utparras.edu.mx/",
+      "role": { "en": "Systems Coordinator", "es": "Coordinador de Sistemas" },
+      "location": "Parras, Coahuila",
+      "remote": false,
+      "startDate": "2017-09",
+      "endDate": "2021-04",
+      "description": {
+        "en": "Combined role spanning software development, IT security and support, and multimedia/marketing for student recruitment.",
+        "es": "Rol combinado de desarrollo de software, seguridad y soporte de sistemas, y multimedia/marketing para reclutamiento de alumnos."
+      },
+      "highlights": {
+        "en": [
+          "Built Vinculación, a system connecting universities, companies, and students: generated real-time resumes from students' academic records, solving companies' difficulty finding qualified candidates.",
+          "Implemented Active Directory across the university's computers, migrating them to open-source OS images and eliminating the institution's prior use of pirated software.",
+          "Deployed Veyon, a computer-lab remote control and monitoring tool, to prevent students from misusing lab equipment.",
+          "Led marketing and multimedia production (photography and video) for student recruitment campaigns, helping grow new enrollment.",
+          "Owned IT security and technical support for all of the university's devices.",
+          "Consolidated monthly reports from every department for presentations to the Secretaría de Educación (state education authority)."
+        ],
+        "es": [
+          "Desarrollé Vinculación, un sistema que conectaba universidades, empresas y estudiantes: generaba currículums en tiempo real a partir del historial académico de los alumnos, resolviendo la dificultad de las empresas para encontrar candidatos calificados.",
+          "Implementé Active Directory en los equipos de la universidad, migrando los equipos a imágenes de sistema operativo con software libre y eliminando el uso previo de software pirata en la institución.",
+          "Implementé Veyon, un software de control remoto y monitoreo de los laboratorios de cómputo, para evitar el mal uso de los equipos por parte de los alumnos.",
+          "Lideré el marketing y la producción multimedia (fotografía y video) de las campañas de reclutamiento de alumnos, ayudando a incrementar las nuevas inscripciones.",
+          "Encargado de la seguridad informática y el soporte técnico de todos los dispositivos de la universidad.",
+          "Unifiqué los reportes mensuales de todos los departamentos para las presentaciones a la Secretaría de Educación."
+        ]
+      },
+      "stack": ["PHP", "Laravel", "Vue", "MySQL", "Linux", "Windows Server", "Active Directory", "Veyon", "Photoshop", "Illustrator", "After Effects", "Premiere"]
+    },
+    {
       "company": "Tangente México",
       "url": "https://tangentemexico.com/",
       "role": { "en": "Frontend Developer", "es": "Programador Frontend" },
@@ -140,34 +172,16 @@
       "endDate": "2020-12",
       "description": null,
       "highlights": {
-        "en": ["Launched Fondiux, an Uber-Eats-style marketplace for local restaurants and small eateries to manage orders and promote their products online."],
-        "es": ["Inicié Fondiux, un marketplace tipo Uber Eats para que restaurantes y cocinas económicas locales gestionaran pedidos y promocionaran sus productos en línea."]
-      },
-      "stack": ["Vue", "Vuetify", "Ionic", "Bootstrap", ".NET"]
-    },
-    {
-      "company": "Universidad Tecnológica de Parras de la Fuente",
-      "url": "https://www.utparras.edu.mx/",
-      "role": { "en": "Systems Coordinator", "es": "Coordinador de Sistemas" },
-      "location": "Parras, Coahuila",
-      "remote": false,
-      "startDate": "2017-09",
-      "endDate": "2021-04",
-      "description": {
-        "en": "Combined role spanning development, server administration, and systems support.",
-        "es": "Rol combinado de desarrollo, administración de servidores y soporte de sistemas."
-      },
-      "highlights": {
         "en": [
-          "Built Vinculación, a system connecting universities, companies, and students: generated real-time resumes from students' academic records, solving companies' difficulty finding qualified candidates.",
-          "Implemented Active Directory across the university's computers, migrating them to open-source OS images and eliminating the institution's prior use of pirated software."
+          "Led the frontend migration from a Vue CDN script include to a proper Vue CLI build on the company's site (.NET backend): the legacy frontend was barely interactive, so I rebuilt it to be fully interactive, improving UI/UX efficiency for clients.",
+          "Launched Fondiux, an Uber-Eats-style marketplace for local restaurants and small eateries to manage orders and promote their products online."
         ],
         "es": [
-          "Desarrollé Vinculación, un sistema que conectaba universidades, empresas y estudiantes: generaba currículums en tiempo real a partir del historial académico de los alumnos, resolviendo la dificultad de las empresas para encontrar candidatos calificados.",
-          "Implementé Active Directory en los equipos de la universidad, migrando los equipos a imágenes de sistema operativo con software libre y eliminando el uso previo de software pirata en la institución."
+          "Lideré la migración del frontend del sitio de la empresa de Vue CDN a un build propio con Vue CLI (backend en .NET): el frontend anterior era poco interactivo, así que lo reconstruí para que fuera completamente interactivo, mejorando la eficiencia de UI/UX para los clientes.",
+          "Inicié Fondiux, un marketplace tipo Uber Eats para que restaurantes y cocinas económicas locales gestionaran pedidos y promocionaran sus productos en línea."
         ]
       },
-      "stack": ["PHP", "Laravel", "Vue", "MySQL", "Linux", "Windows Server", "Active Directory"]
+      "stack": ["Vue", "Vuetify", "Ionic", "Bootstrap", ".NET"]
     }
   ],
   "projects": [

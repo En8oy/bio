@@ -203,6 +203,10 @@
   scroll-margin-top: 90px;
 }
 
+.om-section:last-of-type {
+  padding-bottom: 72px;
+}
+
 .om-section-title {
   font-size: 1.3rem;
   font-weight: 700;
@@ -340,13 +344,3 @@
   color: var(--om-text-muted);
 }
 
-.om-footer {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 28px 24px 72px;
-  border-top: 1px solid var(--om-border);
-  max-width: 1080px;
-  margin: 0 auto;
-}

@@ -33,8 +33,6 @@ function u(key: keyof typeof UI_STRINGS) {
   return t(UI_STRINGS[key], lang.value);
 }
 
-const cvHref = computed(() => `/resume/cv-${lang.value}.pdf`);
-
 const skillGroups = computed(() =>
   Object.entries(resume.skills).map(([category, value]) => ({
     category,
@@ -57,8 +55,18 @@ const skillGroups = computed(() =>
         <p class="hl-subtitle">{{ t(resume.basics.title, lang) }} — {{ t(resume.basics.remote, lang) }}</p>
         <p class="hl-summary">{{ t(resume.basics.summary, lang) }}</p>
         <div class="hl-cta-row">
-          <a class="hl-btn hl-btn--primary" :href="cvHref" download>{{ u("downloadCv") }}</a>
-          <a class="hl-btn hl-btn--ghost" :href="`mailto:${resume.basics.email}`">{{ u("contact") }}</a>
+          <a class="hl-btn hl-btn--primary" :href="`mailto:${resume.basics.email}`">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 7L2 7" /></svg>
+            {{ resume.basics.email }}
+          </a>
+          <a class="hl-btn hl-btn--ghost" :href="resume.basics.github" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.54 2.87 8.39 6.84 9.75.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.84c.85 0 1.71.12 2.5.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.33.68.96.68 1.94 0 1.4-.01 2.53-.01 2.88 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" /></svg>
+            GitHub
+          </a>
+          <a class="hl-btn hl-btn--ghost" :href="resume.basics.linkedin" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 2H3.55A1.55 1.55 0 0 0 2 3.55v16.9A1.55 1.55 0 0 0 3.55 22h16.9A1.55 1.55 0 0 0 22 20.45V3.55A1.55 1.55 0 0 0 20.45 2ZM8.09 18.74h-3V9.5h3Zm-1.5-10.5a1.75 1.75 0 1 1 0-3.5 1.75 1.75 0 0 1 0 3.5Zm12.15 10.5h-3v-4.9c0-1.17-.42-1.97-1.46-1.97a1.58 1.58 0 0 0-1.48 1.06 2 2 0 0 0-.1.71v5.1h-3s.04-8.28 0-9.24h3v1.31a2.98 2.98 0 0 1 2.7-1.49c1.97 0 3.44 1.29 3.44 4.05Z" /></svg>
+            LinkedIn
+          </a>
         </div>
       </div>
     </section>
@@ -131,14 +139,6 @@ const skillGroups = computed(() =>
         </article>
       </div>
     </section>
-
-    <footer class="hl-footer">
-      <div class="hl-social-row">
-        <a class="hl-btn hl-btn--ghost" :href="`mailto:${resume.basics.email}`">{{ resume.basics.email }}</a>
-        <a class="hl-btn hl-btn--ghost" :href="resume.basics.github" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="hl-btn hl-btn--ghost" :href="resume.basics.linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
-      </div>
-    </footer>
   </main>
 </template>
 
