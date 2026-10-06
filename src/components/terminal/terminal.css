@@ -1,6 +1,11 @@
 /* Terminal Dev world: a real tiling-WM terminal screenshot (foot + btop/
    fastfetch style) — one glowing-bordered window, thin TUI panel borders
-   with corner-overlapped labels, dense monospace info, pastel-on-navy. */
+   with corner-overlapped labels, dense monospace info, pastel-on-navy.
+   Reads --color-accent (falling back to the shared --brand-primary
+   default) rather than --brand-primary directly, so the header's visitor
+   color-picker recolors this world's glow/border accent too — this world
+   never sets its own --color-accent on mount, so the picker's override (or
+   the shared default when none is picked) is the only thing driving it. */
 
 /* Font is loaded via a <link> in DesignLayout (terminal-dev.astro's
    fontHref prop), not @import — see candy-brand.css for why. */
@@ -9,13 +14,13 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--brand-primary) 14%, var(--neutral-950)), var(--neutral-950) 65%);
+  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--color-accent, #6d5efc) 14%, var(--neutral-950)), var(--neutral-950) 65%);
   padding: 104px 10px 24px;
   font-family: "JetBrains Mono", var(--font-mono);
 }
 
 :root:not([data-theme="dark"]) .hypr-desktop {
-  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--brand-primary) 8%, var(--neutral-50)), var(--neutral-50) 65%);
+  background: radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--color-accent, #6d5efc) 8%, var(--neutral-50)), var(--neutral-50) 65%);
 }
 
 /* The glowing window frame — the single "terminal emulator" everything
@@ -24,16 +29,16 @@
   width: 100%;
   max-width: none;
   border-radius: 14px;
-  background: color-mix(in srgb, var(--neutral-950) 96%, var(--brand-primary));
+  background: color-mix(in srgb, var(--neutral-950) 96%, var(--color-accent, #6d5efc));
   box-shadow:
-    0 0 0 1.5px color-mix(in srgb, var(--brand-primary) 70%, var(--brand-secondary)),
-    0 0 28px 2px color-mix(in srgb, var(--brand-primary) 45%, transparent),
+    0 0 0 1.5px color-mix(in srgb, var(--color-accent, #6d5efc) 70%, var(--brand-secondary)),
+    0 0 28px 2px color-mix(in srgb, var(--color-accent, #6d5efc) 45%, transparent),
     0 20px 60px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
 :root:not([data-theme="dark"]) .hypr-frame {
-  background: color-mix(in srgb, var(--neutral-50) 96%, var(--brand-primary));
+  background: color-mix(in srgb, var(--neutral-50) 96%, var(--color-accent, #6d5efc));
 }
 
 .hypr-bar {
@@ -41,7 +46,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px 14px;
-  border-bottom: 1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent, #6d5efc) 25%, transparent);
 }
 
 .hypr-workspaces {
@@ -64,12 +69,12 @@
 
 .hypr-ws:hover,
 .hypr-ws:focus-visible {
-  background: color-mix(in srgb, var(--brand-primary) 25%, transparent);
-  color: var(--brand-primary);
+  background: color-mix(in srgb, var(--color-accent, #6d5efc) 25%, transparent);
+  color: var(--color-accent, #6d5efc);
 }
 
 .hypr-clock {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
   font-size: 0.78rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -165,12 +170,12 @@
    (the classic btop/TUI technique), no blur or card-shadow separation. */
 .hypr-window {
   position: relative;
-  background: color-mix(in srgb, var(--brand-primary) 5%, transparent);
+  background: color-mix(in srgb, var(--color-accent, #6d5efc) 5%, transparent);
   /* was color-mix(... var(--neutral-700)) — that token doesn't exist in
      tokens.css (scale jumps 600→800), so the whole color-mix() was invalid
      and the border rendered as nothing. That's why panels had no visible
      division. Using a real token + higher opacity for a clearly visible line. */
-  border: 1px solid color-mix(in srgb, var(--brand-primary) 50%, var(--neutral-600));
+  border: 1px solid color-mix(in srgb, var(--color-accent, #6d5efc) 50%, var(--neutral-600));
   border-radius: 0;
   scroll-margin-top: 110px;
 }
@@ -183,8 +188,8 @@
   align-items: center;
   gap: 6px;
   padding: 6px 10px;
-  border-bottom: 1px solid color-mix(in srgb, var(--brand-primary) 30%, var(--neutral-600));
-  color: var(--brand-primary);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent, #6d5efc) 30%, var(--neutral-600));
+  color: var(--color-accent, #6d5efc);
   font-size: 0.72rem;
   font-weight: 600;
 }
@@ -240,7 +245,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  border: 1px solid color-mix(in srgb, var(--brand-primary) 45%, var(--neutral-600));
+  border: 1px solid color-mix(in srgb, var(--color-accent, #6d5efc) 45%, var(--neutral-600));
   color: var(--color-text);
   font-size: 0.76rem;
   font-weight: 600;
@@ -250,9 +255,9 @@
 
 .hypr-btn:hover,
 .hypr-btn:focus-visible {
-  background: color-mix(in srgb, var(--brand-primary) 18%, transparent);
-  border-color: var(--brand-primary);
-  color: var(--brand-primary);
+  background: color-mix(in srgb, var(--color-accent, #6d5efc) 18%, transparent);
+  border-color: var(--color-accent, #6d5efc);
+  color: var(--color-accent, #6d5efc);
 }
 
 .hypr-btn svg {
@@ -297,7 +302,7 @@
 }
 
 .t-role {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
   font-weight: 500;
   margin: 0;
   font-size: 0.78rem;
@@ -326,7 +331,7 @@
 }
 
 .t-block-title a:hover {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
   text-decoration: underline;
 }
 
@@ -347,11 +352,11 @@
 }
 
 .t-key {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
 }
 
 .hypr-body a {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
 }
 
 .hypr-cursor-line {
@@ -362,7 +367,7 @@
 }
 
 .t-blink {
-  color: var(--brand-primary);
+  color: var(--color-accent, #6d5efc);
   animation: blink 1s steps(1) infinite;
 }
 

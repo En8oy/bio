@@ -8,17 +8,27 @@
    prop), not @import — see candy-brand.css for why. */
 
 .hl-page {
-  --hl-cyan: #22d3ee;
+  /* Reads the visitor's header color-picker choice when one is stored
+     (--color-accent, set globally by <nav-switcher>'s picker and by this
+     world's own mount effect otherwise — see NeonApp.vue), falling back to
+     this world's own cyan. The cyan→purple gradients, glows, and borders
+     below all derive from this one token, so picking a color recolors the
+     page, not just the shared header; --hl-purple stays fixed as the
+     gradient's second stop. */
+  --hl-cyan: var(--color-accent, #22d3ee);
   --hl-purple: #a78bfa;
   --hl-bg: var(--neutral-950);
   --hl-surface: color-mix(in srgb, white 6%, transparent);
   --hl-border: color-mix(in srgb, white 12%, transparent);
   --hl-text: #e2e8f0;
   --hl-text-muted: #94a3b8;
-  /* Bright cyan text reads fine on the dark bg but has very low contrast
-     on the light one — a darker teal for chip text/backgrounds specifically
-     when the page is light. */
-  --hl-tag-text: var(--hl-cyan);
+  /* Fixed, not derived from --hl-cyan: this is text sitting directly on the
+     page background (not inside a filled chip), so it stays this world's
+     own cyan regardless of a picked accent, the same way the light-mode
+     override below stays a fixed darkened teal rather than tracking it —
+     an arbitrary picked hue used as plain text can't be guaranteed to clear
+     contrast against this bg the way a hard-outlined fill can. */
+  --hl-tag-text: #22d3ee;
 
   position: relative;
   min-height: 100vh;
@@ -178,7 +188,10 @@
 }
 
 .hl-btn--primary {
-  color: #04121a;
+  /* Matches --color-accent-contrast (kept in sync with the 2nd argument to
+     applyWorldAccent in NeonApp.vue) instead of a fixed ink — the gradient
+     this sits on now starts from the picked accent via --hl-cyan. */
+  color: var(--color-accent-contrast, #04121a);
   background: linear-gradient(135deg, var(--hl-cyan), var(--hl-purple));
   box-shadow: 0 8px 24px color-mix(in srgb, var(--hl-cyan) 35%, transparent);
 }

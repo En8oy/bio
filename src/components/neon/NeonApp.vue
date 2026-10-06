@@ -3,6 +3,7 @@ import { ref, onMounted, onUnmounted, computed, nextTick } from "vue";
 import resume from "../../data/resume.json";
 import { t, tList, getStoredLang, onLangChange, UI_STRINGS, type Lang } from "../../lib/i18n";
 import { gsap, prefersReducedMotion, revealOnScroll } from "../../lib/motion";
+import { applyWorldAccent } from "../../lib/accent";
 
 // Pre-optimized (astro:assets, WebP) from the .astro page; falls back to
 // the raw file so the component still works standalone.
@@ -16,9 +17,11 @@ onMounted(async () => {
   unsubscribe = onLangChange((l) => (lang.value = l));
 
   // The shared <nav-switcher> is the only header — make it reflect this
-  // world's accent instead of adding a second, duplicate nav bar.
-  document.documentElement.style.setProperty("--color-accent", "#22d3ee");
-  document.documentElement.style.setProperty("--color-accent-contrast", "#04121a");
+  // world's accent instead of adding a second, duplicate nav bar. Goes
+  // through applyWorldAccent rather than setting the property directly, so
+  // a visitor's header color-picker choice survives navigating in here
+  // instead of being silently overwritten back to this world's default.
+  applyWorldAccent("#22d3ee", "#04121a");
 
   await nextTick();
   if (prefersReducedMotion()) return;

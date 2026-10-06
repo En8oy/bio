@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-01T19:20:26Z",
+  "generatedAt": "2026-10-06T00:00:00Z",
   "title": "Design System: Irbing Moreno — Interactive CV",
   "extensions": {
     "colorMeta": {
@@ -9,22 +9,30 @@
       "candy-green": { "role": "accent", "displayName": "Candy Green", "canonical": "#2ecc71", "tonalRamp": ["#0d3d20", "#15572e", "#1d7a40", "#25a357", "#2ecc71", "#5fdb93", "#96eab5", "#d1f7df"] },
       "amber-pop": { "role": "accent", "displayName": "Amber Pop", "canonical": "#ffb020", "tonalRamp": ["#4d3400", "#805700", "#b37a00", "#e69c00", "#ffb020", "#ffc657", "#ffdb94", "#fff0d1"] },
       "alert-red": { "role": "danger", "displayName": "Alert Red", "canonical": "#ff4d4d", "tonalRamp": ["#4d0000", "#800606", "#b31414", "#e62a2a", "#ff4d4d", "#ff7d7d", "#ffabab", "#ffdada"] },
+      "candy-lime": { "role": "accent", "displayName": "Radioactive Lime", "canonical": "#d6fa3a", "tonalRamp": ["#2e3505", "#4c570a", "#6e7d0f", "#9bae16", "#d6fa3a", "#e2fb67", "#eefd97", "#f8fed0"] },
+      "candy-ink": { "role": "neutral", "displayName": "Candy Ink", "canonical": "#0a0a08" },
+      "candy-bg-dark": { "role": "neutral", "displayName": "Candy Canvas (Dark)", "canonical": "#0a0a08" },
+      "candy-surface-dark": { "role": "neutral", "displayName": "Candy Surface (Dark)", "canonical": "#141411" },
+      "candy-bg-light": { "role": "neutral", "displayName": "Candy Canvas (Light)", "canonical": "#f1efe0" },
+      "candy-text-dark": { "role": "neutral", "displayName": "Candy Text (Dark Theme)", "canonical": "#f4f4ef" },
+      "candy-text-light": { "role": "neutral", "displayName": "Candy Text (Light Theme)", "canonical": "#15150f" },
       "neutral-0": { "role": "neutral", "displayName": "Paper White", "canonical": "#ffffff" },
       "neutral-950": { "role": "neutral", "displayName": "Near-Black", "canonical": "#0a0a0c" }
     },
     "typographyMeta": {
       "body": { "displayName": "Body Sans (Inter)", "purpose": "Default UI and body copy token; renders via system-ui fallback in the shipped build — Inter itself is never linked." },
-      "mono": { "displayName": "Label Mono (JetBrains Mono)", "purpose": "Terminal Dev world body/label token; renders via ui-monospace fallback — JetBrains Mono is never linked." },
-      "display": { "displayName": "Display (Poppins)", "purpose": "Named display token, but never actually loaded; Candy Brand's real display face is Baloo 2, loaded independently via @import in candy-brand.css." }
+      "mono": { "displayName": "Label Mono (JetBrains Mono)", "purpose": "Previously a declared-but-unloaded token (Terminal Dev's body renders via ui-monospace fallback). As of this build, Candy Brand actually loads JetBrains Mono 500/700 via its own fontHref and uses it for dates/status/stack-tags." },
+      "display": { "displayName": "Display (Poppins)", "purpose": "Named display token, never loaded; Candy Brand's real display face is Baloo 2, loaded independently via its own fontHref." }
     },
     "shadows": [
-      { "name": "ambient", "value": "0 1px 2px rgba(0, 0, 0, 0.08)", "purpose": "Shared resting elevation (Bento tiles, terminal window border context)." },
-      { "name": "raised", "value": "0 8px 24px rgba(0, 0, 0, 0.12)", "purpose": "Shared hover/raised elevation (Bento tile hover, terminal window resting shadow)." },
-      { "name": "candy-hard-offset-rest", "value": "6px 6px 0 var(--candy-outline)", "purpose": "Candy Brand card resting shadow — world-local, not a shared token." },
-      { "name": "candy-hard-offset-hover", "value": "9px 9px 0 var(--candy-outline)", "purpose": "Candy Brand card hover shadow, paired with translate(-3px,-3px)." }
+      { "name": "ambient", "value": "0 1px 2px rgba(0, 0, 0, 0.08)", "purpose": "Shared resting elevation used elsewhere in the build." },
+      { "name": "raised", "value": "0 8px 24px rgba(0, 0, 0, 0.12)", "purpose": "Shared hover/raised elevation used elsewhere in the build." },
+      { "name": "candy-hard-offset-theme-rest", "value": "6px 6px 0 var(--candy-shadow)", "purpose": "Candy Brand card/hero/h1/heading resting shadow — var(--candy-shadow) is lime in dark mode, pure black in light mode (paired with the border, which flips the same way). An earlier version kept this fixed-lime in both themes; changed to theme-paired at explicit user direction." },
+      { "name": "candy-hard-offset-theme-hover", "value": "9px 9px 0 var(--candy-shadow)", "purpose": "Candy Brand card hover shadow, paired with translate(-3px,-3px); same theme-paired color as the resting shadow." },
+      { "name": "candy-hard-offset-ink", "value": "6px 6px 0 var(--candy-chip-outline)", "purpose": "Candy Brand lime-filled chips (badge, solid pill, tags) — shadow renders in ink so the chip doesn't merge into the dark canvas, in both themes. This is a separate device from the theme-paired shadow above; it does not flip." }
     ],
     "motion": [
-      { "name": "stagger-grid-in", "value": "gsap.from(items, { opacity:0, scale:0.92, y:16, duration:0.4, stagger:{each:0.06, from:'center', grid:'auto'}, ease:'back.out(1.4)' })", "purpose": "Bento-style bouncy grid entrance, gated behind prefers-reduced-motion." },
+      { "name": "stagger-grid-in", "value": "gsap.from(items, { opacity:0, scale:0.92, y:16, duration:0.4, stagger:{each:0.06, from:'center', grid:'auto'}, ease:'back.out(1.4)' })", "purpose": "Bouncy grid entrance, gated behind prefers-reduced-motion." },
       { "name": "reveal-on-scroll", "value": "gsap.from(el, { opacity:0, y:12, duration:0.35, ease:'power1.out', scrollTrigger:{start:'top 90%', toggleActions:'play none none reverse'} })", "purpose": "Subtle one-at-a-time scroll reveal, gated behind prefers-reduced-motion." }
     ]
   },
@@ -33,25 +41,49 @@
       "name": "Nav Switcher",
       "kind": "nav",
       "refersTo": "nav-switcher-button",
-      "description": "Fixed top bar shared verbatim across all three worlds: design switcher, language toggle, theme toggle.",
-      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-designs\"><button class=\"ds-nav-btn\" aria-current=\"true\">Candy Brand</button><button class=\"ds-nav-btn\">Terminal Dev</button><button class=\"ds-nav-btn\">Bento Grid</button></div><div class=\"ds-nav-controls\"><button class=\"ds-nav-btn\" aria-current=\"true\">EN</button><button class=\"ds-nav-btn\">ES</button><button class=\"ds-nav-btn\">🌙</button></div></nav>",
-      "css": ".ds-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; font-family: Inter, system-ui, sans-serif; background: color-mix(in srgb, #f7f7f8 85%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid #d8d8de; } .ds-nav-designs, .ds-nav-controls { display: flex; gap: 6px; flex-wrap: wrap; } .ds-nav-btn { font-size: 13px; border: 1px solid #ccc; background: #ffffff; color: #16161a; padding: 6px 10px; border-radius: 6px; cursor: pointer; line-height: 1; } .ds-nav-btn[aria-current=\"true\"] { background: #6d5efc; border-color: #6d5efc; color: #ffffff; font-weight: 600; } .ds-nav-btn:hover { filter: brightness(0.96); } .ds-nav-btn:focus-visible { outline: 2px solid #6d5efc; outline-offset: 2px; }"
+      "description": "Fixed top bar shared verbatim across every world: design switcher, language toggle, theme toggle.",
+      "html": "<nav class=\"ds-nav\"><div class=\"ds-nav-designs\"><button class=\"ds-nav-btn\" aria-current=\"true\">Candy Brand</button><button class=\"ds-nav-btn\">Terminal Dev</button><button class=\"ds-nav-btn\">Neon</button><button class=\"ds-nav-btn\">Dotfiles</button></div><div class=\"ds-nav-controls\"><button class=\"ds-nav-btn\" aria-current=\"true\">EN</button><button class=\"ds-nav-btn\">ES</button><button class=\"ds-nav-btn\">🌙</button></div></nav>",
+      "css": ".ds-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; font-family: Inter, system-ui, sans-serif; background: color-mix(in srgb, #f7f7f8 85%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid #d8d8de; } .ds-nav-designs, .ds-nav-controls { display: flex; gap: 6px; flex-wrap: wrap; } .ds-nav-btn { font-size: 13px; border: 1px solid #ccc; background: #ffffff; color: #16161a; padding: 6px 10px; border-radius: 6px; cursor: pointer; line-height: 1; } .ds-nav-btn[aria-current=\"true\"] { background: #d6fa3a; border-color: #d6fa3a; color: #0a0a08; font-weight: 600; } .ds-nav-btn:hover { filter: brightness(0.96); } .ds-nav-btn:focus-visible { outline: 2px solid #6d5efc; outline-offset: 2px; }"
     },
     {
       "name": "Candy Brand Card",
       "kind": "card",
       "refersTo": "candy-card",
-      "description": "Neubrutalist outlined card with hard offset shadow, used for each resume experience entry.",
+      "description": "Neubrutalist outlined card on the near-black canvas, lime hard-offset shadow, used for each resume experience entry.",
       "html": "<div class=\"ds-candy-card\"><div class=\"ds-candy-card-head\"><h3>Senior Full Stack Engineer</h3><span class=\"ds-candy-dates\">2023—Present</span></div><p class=\"ds-candy-desc\">Led the platform rebuild.</p></div>",
-      "css": ".ds-candy-card { background: #ffffff; border: 3px solid #16161a; border-radius: 20px; box-shadow: 6px 6px 0 #16161a; padding: 20px 22px; transition: transform 0.15s ease, box-shadow 0.15s ease; } .ds-candy-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 #16161a; } .ds-candy-card-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; } .ds-candy-card h3 { font-family: 'Baloo 2', sans-serif; margin: 0; font-size: 1.3rem; } .ds-candy-dates { font-size: 0.8rem; font-weight: 700; color: #6d5efc; } .ds-candy-desc { color: #5c5c66; line-height: 1.5; }"
+      "css": ".ds-candy-card { background: #141411; border: 3px solid #d6fa3a; border-radius: 20px; box-shadow: 6px 6px 0 #d6fa3a; padding: 20px 22px; transition: transform 0.15s ease, box-shadow 0.15s ease; } .ds-candy-card:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0 #d6fa3a; } .ds-candy-card-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; } .ds-candy-card h3 { font-family: 'Baloo 2', sans-serif; margin: 0; font-size: 1.3rem; color: #f4f4ef; } .ds-candy-dates { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700; color: #d6fa3a; } .ds-candy-desc { color: #b7b7ac; line-height: 1.5; }"
     },
     {
       "name": "Candy Brand Pill Button",
       "kind": "button",
       "refersTo": "candy-pill",
-      "description": "Fully rounded outlined CTA pill with hard offset shadow; solid variant used for the primary CV download.",
-      "html": "<a class=\"ds-candy-pill ds-candy-pill-solid\" href=\"#\">Download CV</a>",
-      "css": ".ds-candy-pill { display: inline-block; padding: 10px 18px; border-radius: 999px; border: 3px solid #16161a; font-weight: 800; text-decoration: none; color: #16161a; background: #f7f7f8; box-shadow: 3px 3px 0 #16161a; transition: transform 0.15s ease; } .ds-candy-pill:hover { transform: translate(-2px, -2px); } .ds-candy-pill:focus-visible { outline: 2px solid #6d5efc; outline-offset: 3px; } .ds-candy-pill-solid { background: #6d5efc; color: #fff; }"
+      "description": "Fully rounded CTA pill; ghost variant outlines lime on black, solid variant is a lime chip with ink text/outline — used for the GitHub/LinkedIn/mailto row.",
+      "html": "<div style=\"display:flex;gap:10px\"><a class=\"ds-candy-pill ds-candy-pill-solid\" href=\"#\">Email me</a><a class=\"ds-candy-pill\" href=\"#\">GitHub</a></div>",
+      "css": ".ds-candy-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; border: 3px solid #d6fa3a; font-weight: 800; text-decoration: none; color: #f4f4ef; background: #141411; box-shadow: 3px 3px 0 #d6fa3a; transition: transform 0.15s ease; } .ds-candy-pill:hover { transform: translate(-2px, -2px); } .ds-candy-pill:focus-visible { outline: 3px solid #d6fa3a; outline-offset: 2px; } .ds-candy-pill-solid { background: #d6fa3a; color: #0a0a08; border-color: #0a0a08; box-shadow: 3px 3px 0 #0a0a08; }"
+    },
+    {
+      "name": "Candy Brand Chip (badge / stack-tags)",
+      "kind": "custom",
+      "refersTo": "candy-chip",
+      "description": "Solid-lime, ink-outlined chip used for the name badge and stack-tags — Candy Brand's bordered-fill treatment for tags and callouts. Headlines are deliberately NOT this component — see Candy Brand Headline.",
+      "html": "<span class=\"ds-candy-chip\">Open to remote work</span>",
+      "css": ".ds-candy-chip { display: inline-block; background: #d6fa3a; color: #0a0a08; font-weight: 800; text-transform: uppercase; letter-spacing: 0.02em; padding: 6px 14px; border-radius: 999px; border: 3px solid #0a0a08; box-shadow: 4px 4px 0 #0a0a08; }"
+    },
+    {
+      "name": "Candy Brand Headline",
+      "kind": "custom",
+      "refersTo": "candy-headline",
+      "description": "Boxed headline for h1 and section headings (.candy-heading) — the same card device (surface fill, theme-paired outline + hard-offset shadow) as .candy-card/.candy-hero, not a flat/unboxed treatment and not the solid-lime ink-text chip either (both tried and reverted during this build). Matches the reference's 'COMPATIBLE CON OPENAI' badge: a bordered box with bright text on a dark fill. Text color is var(--candy-headline) (off-white on the dark surface, near-ink on the light surface); border/shadow color is var(--candy-outline)/var(--candy-shadow), lime in dark mode and pure black (wider, 4px) in light mode. .candy-heading keeps the confirmed rotate(-1deg) sticker tilt.",
+      "html": "<h1>Irbing Alejandro Moreno García</h1><h2 class=\"ds-candy-heading\">Experience</h2>",
+      "css": "h1 { display: block; width: fit-content; font-family: 'Baloo 2', sans-serif; font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.15; padding: 10px 24px; color: #f4f4ef; background: #141411; border: 3px solid #d6fa3a; border-radius: 20px; box-shadow: 6px 6px 0 #d6fa3a; } .ds-candy-heading { font-family: 'Baloo 2', sans-serif; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: #f4f4ef; background: #141411; padding: 6px 18px; border: 3px solid #d6fa3a; border-radius: 12px; box-shadow: 4px 4px 0 #d6fa3a; transform: rotate(-1deg); } /* Light mode: background #ffffff, color #15150f, border/shadow #000000, border-width 4px. */"
+    },
+    {
+      "name": "Candy Brand Highlighter Mark",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "World-local inline <mark> device: solid lime block behind text with box-decoration-break: clone, used once on the hero job-title line. Not a shared text-emphasis primitive.",
+      "html": "<p>Building reliable <mark class=\"ds-candy-highlight\">full-stack platforms</mark> since 2016.</p>",
+      "css": ".ds-candy-highlight { background: #d6fa3a; color: #0a0a08; padding: 1px 6px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }"
     },
     {
       "name": "Terminal Window",
@@ -60,38 +92,33 @@
       "description": "CLI-styled card with macOS traffic-light chrome and typed-command reveal content; Terminal Dev's signature container.",
       "html": "<div class=\"ds-term-window\"><div class=\"ds-term-bar\"><span class=\"ds-term-dot\" style=\"background:#ff5f56\"></span><span class=\"ds-term-dot\" style=\"background:#ffbd2e\"></span><span class=\"ds-term-dot\" style=\"background:#27c93f\"></span><span class=\"ds-term-title\">guest@irbing: ~</span></div><div class=\"ds-term-body\"><p class=\"ds-term-prompt\">$ whoami</p><p class=\"ds-term-out\">Irbing Alejandro Moreno García</p></div></div>",
       "css": ".ds-term-window { max-width: 880px; background: #0a0a0c; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.12); border: 1px solid #27272e; } .ds-term-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #27272e; } .ds-term-dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; } .ds-term-title { margin-left: 10px; color: #9a9aa5; font-size: 0.8rem; } .ds-term-body { padding: 20px 22px 40px; color: #d4f8d4; font-family: ui-monospace, monospace; font-size: 0.88rem; line-height: 1.6; } .ds-term-prompt { color: #27c93f; font-weight: 700; margin: 0; }"
-    },
-    {
-      "name": "Bento Tile",
-      "kind": "card",
-      "refersTo": "bento-tile",
-      "description": "Modular grid card, soft elevation, used for every resume section in the Bento Grid world.",
-      "html": "<div class=\"ds-bento-tile\"><div class=\"ds-bento-tile-head\"><h3>Senior Full Stack Engineer</h3><span class=\"ds-bento-dates\">2023—Present</span></div><p>Led the platform rebuild.</p></div>",
-      "css": ".ds-bento-tile { background: #f7f7f8; border: 1px solid #d8d8de; border-radius: 20px; padding: 22px 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease; } .ds-bento-tile:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.12); } .ds-bento-tile-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; } .ds-bento-tile h3 { margin: 0; font-size: 1.1rem; } .ds-bento-dates { font-size: 0.75rem; color: #5c5c66; }"
     }
   ],
   "narrative": {
     "northStar": "The Same Resume, Three Live Proofs",
-    "overview": "This is not one visual system with variants; it is one shared primitive layer (src/styles/tokens.css) feeding three deliberately distinct, simultaneously-shipped visual worlds, each rendered by the framework it claims to prove: Candy Brand (React, neubrutalist sticker-and-outline aesthetic), Terminal Dev (Lit/Web Components, dark CLI/cyberpunk), and Bento Grid (Vue, neutral Apple-keynote modular grid). A hiring manager switches between them via an iframe on the index page without losing theme or language state. The multiplicity is the product claim (see PRODUCT.md Positioning) — do not collapse it into a single invented house style, and do not promote any one world's devices onto the others.\n\nWhat is genuinely shared and durable: the token layer (color roles, neutral ramp, radius scale, the two soft shadow tokens, light/dark semantic swap via [data-theme]), and the <nav-switcher> Web Component, which renders identically — same button shapes, same active-state treatment — regardless of which world's page it sits on top of.\n\nWhat is deliberately not shared: display typography, elevation language (soft vs. hard-offset), and card geometry. Each world's Components entry is normative only within that world.",
+    "overview": "This is not one visual system with variants; it is one shared primitive layer (src/styles/tokens.css) feeding deliberately distinct, simultaneously-shipped visual worlds, each rendered by the framework it claims to prove: Candy Brand (React, neubrutalist \"dev-tool landing page\" — black canvas, one lime signal color, hard-offset card chrome), Terminal Dev (Lit/Web Components, dark CLI/cyberpunk), and two further worlds rendered under the names Neon and Dotfiles in the shipped nav-switcher. A hiring manager switches between them via the nav-switcher without losing theme or language state. The multiplicity is the product claim (see PRODUCT.md Positioning) — do not collapse it into a single invented house style, and do not promote any one world's devices onto the others.\n\nWhat is genuinely shared and durable: the token layer (color roles, neutral ramp, radius scale, the two soft shadow tokens, light/dark semantic swap via [data-theme]), the <nav-switcher> Web Component, and the per-world convention — now followed by Candy Brand, Neon, and Dotfiles alike — of setting --color-accent / --color-accent-contrast on <html> on mount so the shared nav-switcher active-button fill and the site-wide scrollbar pick up that world's accent while its page is showing.\n\nWhat is deliberately not shared: display typography, elevation language (soft vs. hard-offset), and card geometry. Each world's Components entry is normative only within that world.",
     "keyCharacteristics": [
-      "One token source of truth; three independent expressions on top of it.",
+      "One token source of truth; three-plus independent expressions on top of it.",
       "Soft, layered elevation is the shared default (--shadow-sm / --shadow-md); Candy Brand's hard-offset shadows are a world-local override, not a system default.",
-      "Light/dark is a single [data-theme] attribute swap on :root, consistent across all three worlds.",
-      "Declared webfont families (Inter, JetBrains Mono, Poppins) are tokens, but only Baloo 2 + Nunito are actually fetched — the others render via system fallback in the shipped build."
+      "Light/dark is a single [data-theme] attribute swap on :root, consistent across all worlds.",
+      "Declared webfont families: Baloo 2, Nunito, and (as of this build) JetBrains Mono are actually fetched by Candy Brand; Inter and Poppins remain named-but-unloaded tokens, rendering via system fallback everywhere in the shipped build."
     ],
     "rules": [
       { "name": "The One Ramp Rule", "body": "Light and dark mode are the same neutral ramp read from opposite ends, swapped by a single [data-theme] attribute on :root. No world defines a second, independent dark palette.", "section": "colors" },
-      { "name": "The World-Scoped Shadow Rule", "body": "Hard-offset, zero-blur shadows are Candy Brand's device, confirmed by its own neubrutalist reference material. Do not apply them to Terminal Dev or Bento Grid, and do not fold them into the shared --shadow-sm/--shadow-md tokens as a system-wide default.", "section": "elevation" }
+      { "name": "The World-Scoped Shadow Rule", "body": "Hard-offset, zero-blur shadows are Candy Brand's device, confirmed by its own neubrutalist reference material. Do not apply them to other worlds, and do not fold them into the shared --shadow-sm/--shadow-md tokens as a system-wide default.", "section": "elevation" },
+      { "name": "The Two-Job Border Rule", "body": "In Candy Brand, outline and shadow are not the same color. The outline flips with theme to stay legible against its own canvas; the shadow stays the fixed lime accent in both themes. Don't collapse them back into a single theme-locked color when extending this world.", "section": "elevation" }
     ],
     "dos": [
       "Do read all color, radius, and soft-shadow values from tokens.css custom properties in any new surface — never hardcode a hex that already has a token.",
       "Do keep <nav-switcher> visually identical across every world; it is the one cross-world constant.",
-      "Do scope a world's signature device (Candy's hard-offset shadows and outlines, Terminal's CLI-reveal and local CRT palette, Bento's label-driven modular tiles) to that world only."
+      "Do scope a world's signature device (Candy's lime-on-black hard-offset chrome, highlighter mark, and mono code-chip labels; Terminal's CLI-reveal and local CRT palette) to that world only.",
+      "Do, in Candy Brand specifically, keep the outline theme-flipped (lime on dark canvas, ink on light canvas) and the shadow fixed-lime in both themes; this is the confirmed, shipped pairing, not an arbitrary choice to re-derive."
     ],
     "donts": [
-      "Don't apply Candy Brand's hard-offset, zero-blur shadows or 2–3px outline borders to Terminal Dev or Bento Grid; they read as a different, un-reconciled material system there.",
-      "Don't treat Inter/JetBrains Mono/Poppins as confirmed rendered faces when adding new UI — only Baloo 2 + Nunito are actually loaded; verify a webfont link exists before relying on it.",
-      "Don't introduce new icon-only controls using raw emoji glyphs without a text label or aria-label; the nav-switcher's sun/moon toggle is a carried defect, not a pattern to repeat."
+      "Don't apply Candy Brand's hard-offset, zero-blur shadows or 3px outline borders to other worlds; they read as a different, un-reconciled material system there.",
+      "Don't treat Inter/Poppins as confirmed rendered faces when adding new UI — only Baloo 2, Nunito, and (in Candy Brand only) JetBrains Mono are actually loaded; verify a webfont link exists before relying on it.",
+      "Don't introduce new icon-only controls using raw emoji glyphs without a text label or aria-label; the nav-switcher's sun/moon toggle is a carried defect, not a pattern to repeat.",
+      "Don't reuse Candy Brand's old violet/magenta accent assignment when extending this world; the shared Electric Violet/Hot Magenta tokens are no longer part of its palette, even though they remain valid for other worlds."
     ]
   }
 }

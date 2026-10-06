@@ -3,6 +3,7 @@ import resumeData from "../../data/resume.json";
 import { t, tList, getStoredLang, UI_STRINGS } from "../../lib/i18n";
 import type { Lang } from "../../lib/i18n";
 import { gsap, prefersReducedMotion, revealOnScroll } from "../../lib/motion";
+import { applyWorldAccent } from "../../lib/accent";
 
 const resume = resumeData as any;
 
@@ -47,9 +48,11 @@ export class DotfilesApp extends LitElement {
     // world's accent instead of adding a second nav bar. (--om-accent
     // itself is owned by dotfiles.css directly, not set from here — a
     // same-element CSS declaration always wins over an inherited inline
-    // style, so setting it on `this` had no effect.)
-    document.documentElement.style.setProperty("--color-accent", ACCENT);
-    document.documentElement.style.setProperty("--color-accent-contrast", "#1a1308");
+    // style, so setting it on `this` had no effect.) Goes through
+    // applyWorldAccent rather than setting the property directly, so a
+    // visitor's header color-picker choice survives navigating in here
+    // instead of being silently overwritten back to this world's default.
+    applyWorldAccent(ACCENT, "#1a1308");
   }
 
   disconnectedCallback() {

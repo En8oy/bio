@@ -239,10 +239,11 @@
     }
   ],
   "courses": [
-    { "name": "Claude Code", "date": "2025-11" },
+    { "name": "Claude Code", "date": "2025-11", "url": "https://platzi.com/p/irbing-alejandro-moreno-garcia/curso/12284-course/diploma/detalle/" },
     { "name": "n8n", "date": "2025-06" },
-    { "name": { "en": "Professional Scrum", "es": "Scrum Profesional" }, "date": "2025-12" },
-    { "name": { "en": "Python Fundamentals", "es": "Fundamentos de Python" }, "date": "2026-01" }
+    { "name": { "en": "Professional Scrum", "es": "Scrum Profesional" }, "date": "2025-12", "url": "https://platzi.com/p/irbing-alejandro-moreno-garcia/curso/12146-course/diploma/detalle/" },
+    { "name": { "en": "Python Fundamentals", "es": "Fundamentos de Python" }, "date": "2026-01", "url": "https://platzi.com/p/irbing-alejandro-moreno-garcia/curso/12286-course/diploma/detalle/" },
+    { "name": { "en": "Intermediate Investment: Stock Market Risk Analysis and Decision Making", "es": "Inversión Intermedio: Análisis de Riesgo Bursátil y Toma de Decisiones" }, "date": "2025-06", "url": "https://platzi.com/p/irbing-alejandro-moreno-garcia/curso/2723-course/diploma/detalle/", "relatedProject": "Stonks" }
   ],
   "languages": [
     { "language": { "en": "Spanish", "es": "Español" }, "level": { "en": "native", "es": "nativo" } },

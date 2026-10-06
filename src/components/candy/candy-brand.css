@@ -3,23 +3,70 @@
    it fetches sequentially and delays First Contentful Paint. */
 
 .candy {
-  --candy-outline: var(--neutral-900);
-  /* Scoped, contrast-safe accent for small text (dates/status labels).
-     var(--brand-primary) measures ~4.50:1 on white and only ~3.29:1 on the
-     dark surface — both fail/border AA 4.5:1 for body-size text (impeccable
-     harden: P2 audit finding). This stays local to Candy Brand so the shared
-     --brand-primary token (pills, headline, hero gradient) is untouched. */
-  --candy-accent-text: #584ce0;
-  /* Replaces the shared --brand-secondary (hot pink) for this world only —
-     Terminal Dev also reads --brand-secondary, so changing it globally
-     would have recolored its tags too. Picked for AA contrast: ~3.6:1 on
-     white (large headline text, passes the 3:1 large-text minimum) and
-     ~5:1 as a tag background with dark text. */
-  --candy-accent-2: #e8590c;
-  /* No-op in light mode (same value body already shows through); lets the
-     dark-mode override below actually paint once .candy has its own
-     background declared. */
-  background: var(--color-bg);
+  /* World-local "dev-tool landing page" palette: one lime signal color
+     (--candy-lime) against a near-black canvas by default, matching the
+     pinned reference exactly; the light-mode override below swaps the
+     canvas for the reference's cream dot-pattern zone instead of inventing
+     a second, unrelated light palette. --candy-outline is the border color
+     for BLACK/dark-surfaced panels (hero, cards, photo) — it has to flip
+     with theme so the panel stays visible against its own canvas. Lime-filled
+     chips (badge, h1, pills, tags) always ink-outline in near-black instead,
+     since a bright lime fill reads against either canvas on its own. */
+  --candy-bg: #0a0a08;
+  --candy-surface: #141411;
+  --candy-outline: var(--candy-lime);
+  --candy-chip-outline: #0a0a08;
+  /* Reads the visitor's header color-picker choice when one is stored
+     (--color-accent is set globally by <nav-switcher>'s picker and by this
+     world's own mount effect otherwise — see CandyBrandApp.tsx), falling
+     back to the pinned reference's lime. Every other candy-* token below
+     that represents a fill or hard-offset shadow derives from this one, so
+     picking a color recolors the whole page, not just the shared header. */
+  --candy-lime: var(--color-accent, #d6fa3a);
+  /* Text sitting ON a candy-lime fill (badge, highlight, solid pill, tags):
+     must flip with the picked color, same as --candy-lime itself, or
+     picking a dark accent (e.g. violet) would leave black-on-violet text. */
+  --candy-ink: var(--color-accent-contrast, #0a0a08);
+  --candy-text: #f4f4ef;
+  --candy-text-muted: #b7b7ac;
+  --candy-accent-text: var(--candy-lime);
+  --candy-border-w: 3px;
+  /* Hard-offset shadow color for outline-bordered panels (hero, cards,
+     h1/heading, ghost pills): lime here, since a black shadow would vanish
+     against this near-black canvas and lose the device's depth entirely. */
+  --candy-shadow: var(--candy-lime);
+  /* Headline box color (h1, section headings) — same dark-surface/lime-shadow
+     device as cards (see .candy-card), reused for titles instead of flat
+     unboxed text, matching the reference's own "COMPATIBLE CON OPENAI"
+     badge: a bordered box with bright text on a dark fill, not plain text
+     straight on the canvas. */
+  --candy-headline: var(--candy-text);
+
+  background-color: var(--candy-bg);
+  /* Two layers: the dot tile, then a left/right fade painted in the page's
+     own ground color on top of it — opaque (hides the dots) through the
+     center where the ~960px content column sits, transparent (dots show
+     fully) past the column's edges, so the texture reads as denser toward
+     the page's side margins instead of a flat uniform tile competing with
+     the content. (An earlier radial-vignette version used `ellipse at
+     center` with no explicit size, which defaults to farthest-corner
+     sizing — on a 1440-wide viewport that pushed the "reveal" radius
+     almost entirely outside the visible box, so the fade was never
+     actually visible; a horizontal fade keyed to the content column's own
+     width is simpler and doesn't drift with viewport height.) Both layers
+     share background-attachment: fixed so the fade stays keyed to the
+     viewport as the page scrolls, same as the dots. */
+  background-image: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--candy-bg) 16%,
+      var(--candy-bg) 84%,
+      transparent 100%
+    ),
+    radial-gradient(color-mix(in srgb, var(--candy-lime) 55%, transparent) 1.3px, transparent 1.3px);
+  background-size: 100% 100%, 22px 22px;
+  background-attachment: fixed, fixed;
+  color: var(--candy-text);
   max-width: none;
   width: 100%;
   margin: 0 auto;
@@ -27,25 +74,42 @@
   font-family: "Nunito", var(--font-sans);
 }
 
-:root[data-theme="dark"] .candy {
-  --candy-outline: var(--neutral-0);
-  --candy-accent-text: #9f93ff;
-  /* Example: inverted dark-mode palette — cards and page background swap
-     which one is darker (neutral-800 page / neutral-950 cards, instead of
-     the default neutral-950 page / neutral-800 cards). Light mode is
-     untouched. Scoped to .candy so the other 3 worlds aren't affected. */
-  --color-bg: var(--neutral-800);
-  --color-surface-raised: var(--neutral-950);
+/* Light mode = the reference's other half: the cream, dot-textured paper
+   zone instead of its black zone. Same lime accent, same hard-edged shapes —
+   only the canvas and panel fill invert, the way every other world here
+   already pairs one accent hue with a light and a dark ground. */
+:root:not([data-theme="dark"]) .candy {
+  --candy-bg: #f1efe0;
+  --candy-surface: #ffffff;
+  /* Pure black, not a near-black tint — on the white card surface this
+     needs to read as a crisp, deliberately bold ink line, not a softened
+     dark gray. Paired with a wider border (--candy-border-w) so it reads
+     as clearly more "marked" than the lime hard-offset shadow alone. */
+  --candy-outline: #000000;
+  --candy-border-w: 4px;
+  /* Black shadow on the white/cream canvas here, not lime: a solid black
+     offset reads as a crisper, more "marked" classic sticker shadow next to
+     the equally-black border, instead of splitting attention between two
+     colors the way lime-on-white did. */
+  --candy-shadow: var(--candy-outline);
+  --candy-ink: var(--color-accent-contrast, #0a0a08);
+  --candy-text: #15150f;
+  --candy-text-muted: #5c5c50;
+  --candy-headline: var(--candy-text);
+  /* Darker than a straight lime-at-contrast read: this sits on the bare
+     canvas (not a card surface), so it gets margin above the 4.5:1 floor
+     rather than skimming it. */
+  --candy-accent-text: #4c590c;
 }
 
 .candy-hero {
   text-align: center;
   padding: 48px 32px 56px;
   margin: 32px 0 56px;
-  background: var(--color-surface-raised);
-  border: 3px solid var(--candy-outline);
+  background: var(--candy-surface);
+  border: var(--candy-border-w) solid var(--candy-outline);
   border-radius: var(--radius-lg);
-  box-shadow: 8px 8px 0 var(--candy-outline);
+  box-shadow: 8px 8px 0 var(--candy-shadow);
 }
 
 .candy-photo {
@@ -55,57 +119,72 @@
   height: 120px;
   object-fit: cover;
   border-radius: 999px;
-  border: 3px solid var(--candy-outline);
-  box-shadow: 5px 5px 0 var(--candy-outline);
+  border: var(--candy-border-w) solid var(--candy-outline);
+  box-shadow: 5px 5px 0 var(--candy-shadow);
 }
 
 .candy-badge {
   display: inline-block;
-  background: var(--brand-success);
-  color: var(--neutral-900);
+  background: var(--candy-lime);
+  color: var(--candy-ink);
   font-weight: 800;
   padding: 6px 14px;
   border-radius: 999px;
-  border: 3px solid var(--candy-outline);
+  border: 3px solid var(--candy-chip-outline);
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .candy h1 {
-  /* Boxed like every other element here (.candy-badge, .candy-pill,
-     .candy-card: background + hard border + offset box-shadow) instead of
-     the previous text-stroke + text-shadow treatment, which was the only
-     element not using that shared card look. */
-  /* fit-content + margin auto (not inline-block) — h1 is block-level by
-     default, which is what puts it on its own centered line below the
-     badge; inline-block would sit it beside the previous inline-block
-     sibling instead. */
+  /* Boxed like the cards, not like the lime chips: dark/light surface fill
+     + theme-flipped border + lime hard-offset shadow + bright body-color
+     text, the same device as .candy-card and .candy-hero. This matches the
+     reference's "COMPATIBLE CON OPENAI" badge — a bordered box with light
+     text on a dark fill and a lime drop shadow — rather than either a solid
+     lime chip with ink text, or plain unboxed text straight on the canvas. */
   display: block;
   width: fit-content;
   font-family: "Baloo 2", var(--font-display);
   font-size: clamp(1.8rem, 5vw, 3.2rem);
   font-weight: 800;
-  margin: 16px auto 4px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 18px auto 6px;
   padding: 10px 24px;
-  color: var(--neutral-900);
-  background: var(--candy-accent-2);
-  border: 3px solid var(--candy-outline);
+  color: var(--candy-headline);
+  background: var(--candy-surface);
+  border: var(--candy-border-w) solid var(--candy-outline);
   border-radius: var(--radius-lg);
-  box-shadow: 6px 6px 0 var(--candy-outline);
+  box-shadow: 6px 6px 0 var(--candy-shadow);
 }
 
 .candy-title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--candy-text);
   margin: 0 0 16px;
+}
+
+/* Inline highlighter emphasis — the reference's device for calling out a
+   key phrase mid-sentence (its "gratis" treatment): a solid lime block
+   wrapping just the phrase, ink text for the same guaranteed contrast the
+   chips/badges already rely on, rather than a thin pen-stroke underline
+   that would put light body text over a bright fill. */
+.candy-highlight {
+  background: var(--candy-lime);
+  color: var(--candy-ink);
+  padding: 1px 6px;
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .candy-summary {
   max-width: 620px;
   margin: 0 auto;
-  color: var(--color-text-muted);
+  color: var(--candy-text-muted);
   line-height: 1.6;
 }
 
@@ -123,17 +202,24 @@
   gap: 8px;
   padding: 10px 18px;
   border-radius: 999px;
-  border: 3px solid var(--candy-outline);
+  border: var(--candy-border-w) solid var(--candy-outline);
   font-weight: 800;
   text-decoration: none;
-  color: var(--color-text);
-  background: var(--color-surface);
-  box-shadow: 3px 3px 0 var(--candy-outline);
+  color: var(--candy-text);
+  background: var(--candy-surface);
+  box-shadow: 3px 3px 0 var(--candy-shadow);
   transition: transform 0.15s ease;
 }
 
 .candy-pill:hover {
   transform: translate(-2px, -2px);
+}
+
+.candy-pill:focus-visible,
+.candy-card h3 a:focus-visible {
+  outline: 3px solid var(--candy-lime);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .candy-pill svg {
@@ -142,9 +228,18 @@
   flex-shrink: 0;
 }
 
+/* Ghost pills (GitHub/LinkedIn): icon reads in the accent color while the
+   label stays body text — the solid mailto pill below is excluded since its
+   icon already sits on a lime fill and needs the ink color instead. */
+.candy-pill:not(.candy-pill--solid) svg {
+  color: var(--candy-lime);
+}
+
 .candy-pill--solid {
-  background: var(--brand-primary);
-  color: #fff;
+  background: var(--candy-lime);
+  color: var(--candy-ink);
+  border-color: var(--candy-chip-outline);
+  box-shadow: 3px 3px 0 var(--candy-chip-outline);
 }
 
 .candy-section {
@@ -152,15 +247,19 @@
 }
 
 .candy-heading {
+  /* Same boxed card device as h1 (see its comment) — smaller, and keeping
+     the confirmed sticker tilt. */
   font-family: "Baloo 2", var(--font-display);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
   display: inline-block;
-  background: var(--brand-warning);
-  color: var(--neutral-900);
-  padding: 4px 16px;
-  border-radius: 10px;
-  border: 3px solid var(--candy-outline);
-  box-shadow: 4px 4px 0 var(--candy-outline);
+  color: var(--candy-headline);
+  background: var(--candy-surface);
+  padding: 6px 18px;
+  border: var(--candy-border-w) solid var(--candy-outline);
+  border-radius: var(--radius-md);
+  box-shadow: 4px 4px 0 var(--candy-shadow);
   margin-bottom: 24px;
   transform: rotate(-1deg);
 }
@@ -209,7 +308,7 @@
 }
 
 .candy-combo-item + .candy-combo-item {
-  border-left: 1px solid color-mix(in srgb, var(--candy-outline) 25%, transparent);
+  border-left: 1px solid color-mix(in srgb, var(--candy-text-muted) 40%, transparent);
   padding-left: 20px;
 }
 
@@ -217,7 +316,7 @@
   .candy-combo-item + .candy-combo-item {
     border-left: none;
     padding-left: 0;
-    border-top: 1px solid color-mix(in srgb, var(--candy-outline) 25%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--candy-text-muted) 40%, transparent);
     padding-top: 16px;
   }
 }
@@ -240,17 +339,17 @@
 .candy-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface-raised);
-  border: 3px solid var(--candy-outline);
+  background: var(--candy-surface);
+  border: var(--candy-border-w) solid var(--candy-outline);
   border-radius: var(--radius-lg);
-  box-shadow: 6px 6px 0 var(--candy-outline);
+  box-shadow: 6px 6px 0 var(--candy-shadow);
   padding: 20px 22px;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .candy-card:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 9px 9px 0 var(--candy-outline);
+  box-shadow: 9px 9px 0 var(--candy-shadow);
 }
 
 .candy-card-head {
@@ -265,6 +364,7 @@
   font-family: "Baloo 2", var(--font-display);
   margin: 0;
   font-size: 1.3rem;
+  color: var(--candy-text);
 }
 
 .candy-card h3 a {
@@ -279,7 +379,8 @@
 
 .candy-dates,
 .candy-status {
-  font-size: 0.8rem;
+  font-family: "JetBrains Mono", var(--font-mono);
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--candy-accent-text);
 }
@@ -287,16 +388,17 @@
 .candy-role {
   font-weight: 700;
   margin: 2px 0 10px;
+  color: var(--candy-text);
 }
 
 .candy-desc {
-  color: var(--color-text-muted);
+  color: var(--candy-text-muted);
   line-height: 1.5;
 }
 
 .candy-card ul {
   padding-left: 20px;
-  color: var(--color-text);
+  color: var(--candy-text);
   line-height: 1.6;
 }
 
@@ -309,28 +411,22 @@
 }
 
 .candy-tag {
-  /* Reuses the shared --brand-warning amber (already the .candy-heading
-     background) instead of the headline's orange — dark-on-orange read
-     muddy at this small size; amber + dark text is much crisper (~9.9:1).
-     Same style everywhere (experience, projects, skills) — no muted
-     "--mini" variant anymore. */
-  background: var(--brand-warning);
-  color: var(--neutral-900);
-  border: 2px solid var(--candy-outline);
+  /* Monospace "code chip" register — the reference's terminal/endpoint
+     styling, standing in for the one webfont token (--font-mono) this
+     project declared in DESIGN.md but never actually loaded until now. */
+  font-family: "JetBrains Mono", var(--font-mono);
+  background: var(--candy-lime);
+  color: var(--candy-ink);
+  border: 2px solid var(--candy-chip-outline);
   border-radius: 999px;
   padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: transform 0.15s ease;
 }
 
 .candy-tag:hover {
-  /* Dark text kept on hover too — white-on-orange here measures ~3.58:1,
-     under the 4.5:1 small-text minimum; neutral-900 passes on both. */
-  background: var(--candy-accent-2);
-  color: var(--neutral-900);
   transform: translateY(-2px);
-  box-shadow: 2px 2px 0 var(--candy-outline);
 }
 
 .candy-edu {
@@ -343,20 +439,21 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  background: var(--color-surface-raised);
-  border: 3px solid var(--candy-outline);
+  background: var(--candy-surface);
+  border: var(--candy-border-w) solid var(--candy-outline);
   border-radius: var(--radius-md);
-  box-shadow: 4px 4px 0 var(--candy-outline);
+  box-shadow: 4px 4px 0 var(--candy-shadow);
   padding: 14px 16px;
 }
 
 .candy-edu-item strong {
   font-family: "Baloo 2", var(--font-display);
   font-size: 1rem;
+  color: var(--candy-text);
 }
 
 .candy-edu-item span {
-  color: var(--color-text-muted);
+  color: var(--candy-text-muted);
   font-size: 0.85rem;
 }
 
@@ -369,4 +466,8 @@
 .candy-skill-group h4 {
   font-family: "Baloo 2", var(--font-display);
   margin: 0 0 8px;
+  color: var(--candy-accent-text);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
 }

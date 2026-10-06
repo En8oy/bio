@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import resume from "../../data/resume.json";
 import { t, tList, getStoredLang, onLangChange, UI_STRINGS, type Lang } from "../../lib/i18n";
 import { gsap, prefersReducedMotion, staggerGridIn, revealOnScroll } from "../../lib/motion";
+import { applyWorldAccent } from "../../lib/accent";
 import "./candy-brand.css";
 
 const ICON_MAIL = (
@@ -21,6 +22,13 @@ const ICON_LINKEDIN = (
   </svg>
 );
 
+// Kept in sync with --candy-lime / --candy-ink in candy-brand.css — only
+// used here to push this world's accent into the shared <nav-switcher> and
+// the site-wide themed scrollbar (both read --color-accent off <html>),
+// matching the pattern every other world already follows.
+const ACCENT = "#d6fa3a";
+const ACCENT_CONTRAST = "#0a0a08";
+
 interface Props {
   /** Pre-optimized (astro:assets, WebP) photo URL from the .astro page;
    * falls back to the raw file so the component still works standalone. */
@@ -34,6 +42,13 @@ export default function CandyBrandApp({ photoSrc = "/profile.jpg" }: Props) {
   useEffect(() => {
     setLang(getStoredLang());
     return onLangChange(setLang);
+  }, []);
+
+  useEffect(() => {
+    // applyWorldAccent instead of setting the property directly, so a
+    // visitor's header color-picker choice survives navigating in here
+    // instead of being silently overwritten back to this world's default.
+    applyWorldAccent(ACCENT, ACCENT_CONTRAST);
   }, []);
 
   // Hero: bouncy entrance (ui-ux-pro-max gsap "Standard" tier, back.out easing).
@@ -66,7 +81,9 @@ export default function CandyBrandApp({ photoSrc = "/profile.jpg" }: Props) {
         />
         <span className="candy-badge">{t(resume.basics.remote, lang)}</span>
         <h1>{resume.basics.name}</h1>
-        <p className="candy-title">{t(resume.basics.title, lang)}</p>
+        <p className="candy-title">
+          <mark className="candy-highlight">{t(resume.basics.title, lang)}</mark>
+        </p>
         <p className="candy-summary">{t(resume.basics.summary, lang)}</p>
         <div className="candy-cta-row">
           <a className="candy-pill candy-pill--solid" href={`mailto:${resume.basics.email}`}>

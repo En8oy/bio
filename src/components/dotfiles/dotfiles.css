@@ -9,7 +9,13 @@
    prop), not @import — see candy-brand.css for why. */
 
 .om-page {
-  --om-accent: #00aa8a;
+  /* Reads the visitor's header color-picker choice when one is stored
+     (--color-accent, set globally by <nav-switcher>'s picker and by this
+     world's own mount effect otherwise — see dotfiles-app.ts), falling
+     back to this world's own teal. Fills, borders, and the dot texture
+     below all derive from this one token, so picking a color recolors the
+     page, not just the shared header. */
+  --om-accent: var(--color-accent, #00aa8a);
   /* Text color specifically — the raw accent reads fine on the dark bg
      (~6.6:1) but fails AA on the light bg (~2.6:1), same issue Neon's tags
      had. A darker teal keeps the same hue for light mode's text uses. */
@@ -181,7 +187,11 @@
 
 .om-btn--primary {
   background: var(--om-accent);
-  color: #1a1308;
+  /* Matches --color-accent-contrast (kept in sync with ACCENT_CONTRAST in
+     dotfiles-app.ts) instead of a fixed ink — this button's own fill now
+     tracks the picked accent via --om-accent, so its text has to flip the
+     same way or a dark picked accent would read as near-black-on-near-black. */
+  color: var(--color-accent-contrast, #1a1308);
 }
 
 .om-btn--ghost {

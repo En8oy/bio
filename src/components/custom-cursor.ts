@@ -92,6 +92,10 @@ export class CustomCursor extends LitElement {
     /* Candy Brand: a bold outlined ring, bounces on click. */
     :host([kind="candy-brand"]) .ring {
       border-width: 3px;
+      border-color: var(--color-accent, #d6fa3a);
+    }
+    :host([kind="candy-brand"]) .dot {
+      background: var(--color-accent, #d6fa3a);
     }
   `;
 
