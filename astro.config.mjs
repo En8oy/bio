@@ -8,9 +8,10 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // Custom domain on GitHub Pages — served from the root, so no `base` is
-  // needed (same as a user site). public/CNAME tells GitHub Pages which
-  // domain to serve this repo on.
-  site: "https://isitagentready.com",
+  // Actually hosted on Vercel at cv.vinery.dev — isitagentready.com /
+  // GitHub Pages was an earlier, abandoned deployment target. `site` only
+  // affects canonical URLs, OG tags, and the sitemap; Vercel needs no
+  // `base` since it's served from the domain root either way.
+  site: "https://cv.vinery.dev",
   integrations: [vue(), react(), sitemap()]
 });

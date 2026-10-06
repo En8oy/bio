@@ -14,9 +14,11 @@ interface Props {
    * Loaded via <link> (parallel fetch) instead of a CSS @import, which is
    * render-blocking and delays First Contentful Paint. */
   fontHref?: string;
+  /** Opts a page (e.g. 404) out of search indexing. */
+  noindex?: boolean;
 }
 
-const { title, bodyClass = "", description = resume.basics.summary.en, fontHref } = Astro.props;
+const { title, bodyClass = "", description = resume.basics.summary.en, fontHref, noindex = false } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -51,6 +53,7 @@ const personJsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL} />
 
     <meta property="og:type" content="profile" />
@@ -96,6 +99,19 @@ const personJsonLd = {
         document.documentElement.setAttribute("data-theme", theme);
       })();
     </script>
+    <!-- Cloudflare Web Analytics — privacy-first (no cookies), site-wide
+         across every page via this shared layout. Token is a public
+         client-side analytics id, not a secret. Manual snippet rather than
+         Cloudflare's automatic zone-level injection: cv.vinery.dev (the
+         real production host) isn't itself proxied through Cloudflare —
+         only vinery.dev's root zone is — so there's nothing for Cloudflare
+         to auto-inject into on this subdomain. -->
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "f5b12d866ff54696a6f9ecb3cefd4859"}'
+    ></script>
   </head>
   <body class={bodyClass}>
     <nav-switcher></nav-switcher>

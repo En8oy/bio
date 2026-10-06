@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://isitagentready.com/sitemap-index.xml
+Sitemap: https://cv.vinery.dev/sitemap-index.xml
