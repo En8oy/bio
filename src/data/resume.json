@@ -1,7 +1,7 @@
 {
   "basics": {
     "name": "Irbing Alejandro Moreno García",
-    "title": { "en": "Senior Full Stack Engineer", "es": "Senior Full Stack Developer" },
+    "title": { "en": "Full Stack + AI Engineer", "es": "Full Stack + AI Developer" },
     "location": { "en": "Parras de la Fuente, Coahuila, Mexico", "es": "Parras de la Fuente, Coahuila, México" },
     "remote": { "en": "Open to remote work", "es": "Disponible para trabajo remoto" },
     "email": "irbing.moreno@outlook.com",
@@ -9,8 +9,8 @@
     "linkedin": "https://linkedin.com/in/en8oy",
     "github": "https://github.com/En8oy",
     "summary": {
-      "en": "Full stack developer with 8+ years building end-to-end web products, the last five remote with US-based teams. Specialized in high-performance architectures for marketing SaaS platforms — edge computing, Web Components, Cloudflare Workers — and in integrating AI into the product lifecycle. Unlike most developers, understands the business behind the product: funnels, conversion, attribution, and growth.",
-      "es": "Desarrollador full stack con más de 8 años construyendo productos web de punta a punta, los últimos cinco en remoto con equipos de Estados Unidos. Especializado en arquitecturas de alto rendimiento para plataformas SaaS de marketing (edge computing, Web Components, Cloudflare Workers) y en integrar IA en el ciclo de producto. A diferencia de la mayoría de los desarrolladores, entiende el negocio detrás del producto: embudos, conversión, atribución y crecimiento."
+      "en": "Full stack developer with 8+ years building end-to-end web products, the last five remote with US-based teams. I build AI-augmented development workflows — including an MCP server that lets Claude Code build and publish production features directly — on top of high-performance architectures for marketing SaaS platforms (edge computing, Web Components, Cloudflare Workers). Unlike most developers, I understand the business behind the product: funnels, conversion, attribution, and growth.",
+      "es": "Desarrollador full stack con más de 8 años construyendo productos web de punta a punta, los últimos cinco en remoto con equipos de Estados Unidos. Construyo flujos de desarrollo asistidos por IA —incluyendo un servidor MCP que permite a Claude Code construir y publicar funcionalidades en producción directamente— sobre arquitecturas de alto rendimiento para plataformas SaaS de marketing (edge computing, Web Components, Cloudflare Workers). A diferencia de la mayoría de los desarrolladores, entiendo el negocio detrás del producto: embudos, conversión, atribución y crecimiento."
     }
   },
   "experience": [
